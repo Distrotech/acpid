@@ -1,0 +1,11 @@
+*~
+*.o
+*.d
+cscope.out
+acpid
+acpi_listen
+*.anjuta
+.anjuta
+.anjuta_sym_db.db
+.depend
+

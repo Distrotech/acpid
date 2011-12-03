@@ -1,0 +1,18 @@
+Future Enhancements
+-------------------
+
+systemd support
+  - Support receiving unix sockets from systemd.
+  - Make daemonize() do what's right for systemd.
+  - Can we auto-detect systemd?  Maybe the presence of the environment vars
+    for the unix sockets?
+
+Look into using libnl for netlink
+  - Can this be done?
+
+DBUS support
+Re-implement autoconf/automake support
+Re-add ancillary files needed for wider distribution
+Add a main config file
+ - support multiple event sources (such as named pipes)
+Allow socket-connected clients to filter incoming events
