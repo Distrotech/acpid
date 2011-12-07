@@ -90,10 +90,14 @@ void process_inotify(int fd)
 
 	/* if this is a delete */
 	if (eventbuf.event.mask & IN_DELETE) {
-		struct connection *c;
+		/* struct connection *c; */
 		
 		acpid_log(LOG_DEBUG, "inotify received a delete for: %s", devname);
 
+#if 0
+/* Switching back to the original ENODEV detection scheme.  See 
+   process_input() in input_layer.c. */
+/* keeping this for future reference */
 		/* search for the event file in the connection list */
 		/* ??? Or should we just have a delete_connection_name()? */
 		c = find_connection_name(devname);
@@ -101,6 +105,7 @@ void process_inotify(int fd)
 		/* close that connection if found */
 		if (c)
 			delete_connection(c->fd);
+#endif
 	}
 }
 

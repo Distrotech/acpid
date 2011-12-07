@@ -203,8 +203,7 @@ void process_input(int fd)
 		if (errno == ENODEV) {
 			acpid_log(LOG_WARNING, "input device has been disconnected, fd %d",
 			          fd);
-			/* in some cases, this is too extreme */
-//			delete_connection(fd);
+			delete_connection(fd);
 			return;
 		}
 		acpid_log(LOG_ERR, "input layer read error: %s (%d)",
