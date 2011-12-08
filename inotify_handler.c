@@ -53,13 +53,11 @@ void process_inotify(int fd)
 	acpid_log(LOG_DEBUG, "inotify read bytes: %d", bytes);
 
 	/* eof is not expected */	
-	if (bytes == 0)
-	{
+	if (bytes == 0) {
 		acpid_log(LOG_WARNING, "inotify fd eof encountered");
 		return;
 	}
-	else if (bytes < 0)
-	{
+	else if (bytes < 0) {
 		/* EINVAL means buffer wasn't big enough.  See inotify(7). */
 		acpid_log(LOG_ERR, "inotify read error: %s (%d)",
 			strerror(errno), errno);

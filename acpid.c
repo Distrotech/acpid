@@ -80,16 +80,14 @@ main(int argc, char **argv)
 	/* open the log */
 	open_log();
 	
-	if (!netlink)
-	{
+	if (!netlink) {
 		/* open the acpi event file in the proc fs */
 		/* if the open fails, try netlink */
 		if (open_proc())
 			netlink = 1;
 	}
 
-	if (netlink)
-	{
+	if (netlink) {
 		/* open the input layer */
 		open_input();
 
@@ -141,8 +139,7 @@ main(int argc, char **argv)
 	    logevents ? "on" : "off");
 
 	/* main loop */
-	while (1)
-	{
+	while (1) {
 		fd_set readfds;
 		int nready;
 		int i;
@@ -165,8 +162,7 @@ main(int argc, char **argv)
 		acpid_close_dead_clients();
 
 		/* for each connection */
-		for (i = 0; i <= get_number_of_connections(); ++i)
-		{
+		for (i = 0; i <= get_number_of_connections(); ++i) {
 			int fd;
 
 			p = get_connection(i);
@@ -179,8 +175,7 @@ main(int argc, char **argv)
 			fd = p->fd;
 
 			/* if this file descriptor has data waiting */
-			if (FD_ISSET(fd, &readfds))
-			{
+			if (FD_ISSET(fd, &readfds)) {
 				/* delegate to this connection's process function */
 				p->process(fd);
 			}
@@ -300,8 +295,7 @@ handle_cmdline(int *argc, char ***argv)
 			}
 			for (opt = opts, hlp = opts_help;
 			     opt->name;
-			     opt++, hlp++)
-			{
+			     opt++, hlp++) {
 				fprintf(stderr, "  -%c, --%s",
 					opt->val, opt->name);
 				size = strlen(opt->name);

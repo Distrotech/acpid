@@ -1,5 +1,14 @@
 * ???  Ted Felix <http://www.tedfelix.com>
   - 2.0.14 release
+  - Fixed brace style.  (inotify_handler.c acpid.c)  (Ted Felix)
+  - Added support for a "K" suffix on event strings to indicate that they
+    may have originated from a keyboard input layer device.  This can be
+    used to differentiate between a power switch on the keyboard, and a power
+    switch on the computer's case.
+    
+    (connection_list.h inotify_handler.c input_layer.c netlink.c proc.c
+    sock.c)  (Ted Felix)
+    
   - Added a pathname to connection along with a find_connection_name().  
     Modifications to process_inotify() to log IN_DELETE events.  Additional 
     debugging output.
