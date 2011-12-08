@@ -232,8 +232,9 @@ void open_netlink(void)
 
 	/* add a connection to the list */
 	c.fd = rth.fd;
-	c.pathname = NULL;
 	c.process = process_netlink;
+	c.pathname = NULL;
+	c.kybd = 0;
 	add_connection(&c);
 }
 

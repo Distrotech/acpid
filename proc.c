@@ -107,8 +107,9 @@ open_proc()
 
 	/* add a connection to the list */
 	c.fd = fd;
-	c.pathname = NULL;
 	c.process = process_proc;
+	c.pathname = NULL;
+	c.kybd = 0;
 	add_connection(&c);
 
 	return 0;

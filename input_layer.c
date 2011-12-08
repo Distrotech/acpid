@@ -188,6 +188,8 @@ void process_input(int fd)
 	ssize_t nbytes;
 	const char *str;
 	static int nerrs;
+	struct connection *c;
+	char str2[100];
 
 	nbytes = read(fd, &event, sizeof(event));
 
@@ -226,11 +228,30 @@ void process_input(int fd)
 		return;
 	}
 
+	c = find_connection(fd);
+	
+	/* if we're getting scancodes, we probably have a keyboard */
+	if (event.type == EV_MSC  &&  event.code == MSC_SCAN) {
+		if (c)
+			c->kybd = 1;  // appears to be a keyboard device
+	}
+	
 	/* convert the event into a string */
 	str = event_string(event);
 	/* if this is not an event we care about, bail */
 	if (str == NULL)
 		return;
+
+	/* If we suspect this is a keyboard, and we have enough space, tack on a 
+	 * "K" to the end of the event string. */
+	if (c->kybd  &&  strnlen(str, sizeof(str2)) <= sizeof(str2) - 3) {
+		/* strcpy() str to a new buffer */
+		strcpy(str2, str);
+		/* strcat() on the " K" */
+		strcat(str2, " K");
+		/* set str to point to the new buffer */
+		str = str2;
+	}
 	
 	/* if we're locked, don't process the event */
 	if (locked()) {
@@ -326,10 +347,13 @@ int open_inputfile(const char *filename)
 
 		/* add a connection to the list */
 		c.fd = fd;
+		c.process = process_input;
 		/* delete_connection() will free */
 		c.pathname = malloc(strlen(filename) + 1);
-		strcpy(c.pathname, filename);
-		c.process = process_input;
+		if (c.pathname)
+			strcpy(c.pathname, filename);
+		/* assume not a keyboard until we see a scancode */
+		c.kybd = 0;
 		add_connection(&c);
 
 		return 0;  /* success */

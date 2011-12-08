@@ -1,6 +1,25 @@
 * ???  Ted Felix <http://www.tedfelix.com>
   - 2.0.14 release
-
+  - Added a pathname to connection along with a find_connection_name().  
+    Modifications to process_inotify() to log IN_DELETE events.  Additional 
+    debugging output.
+      
+    These changes were experimentation related to dealing with a ThinkPad 
+    suspend problem.  They should have no effect on acpid's behavior.  They are 
+    mainly noticeable as a change in the logging.
+    
+    The Problem: When resuming from suspend, the lid switch and power button's 
+    /dev/input event files do not trigger an IN_CREATE, so acpid doesn't 
+    reconnect to them.  Restarting acpid fixes this.
+    
+    Tried using IN_DELETE instead of ENODEV to detect the drivers going away.
+    Worked fine for disconnecting/reconnecting a USB keyboard, but not for the
+    ThinkPad suspend problem.  I've given up on fixing this as it appears to be
+    a kernel or driver issue.
+    
+    (connection_list.c connection_list.h inotify_handler.c input_layer.c 
+    netlink.c proc.c sock.c)  (Ted Felix)
+      
 * Tue Nov 15 2011  Ted Felix <http://www.tedfelix.com>
   - 2.0.13 release
   - Fix for socket name buffer overflow.  (ud_socket.c)  (Ted Felix)

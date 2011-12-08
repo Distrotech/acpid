@@ -43,6 +43,9 @@ struct connection
 	   if not specified.  Memory will be freed with free() when connection
 	   is deleted. */
 	char *pathname;
+
+	/* 0 indicates this is probably not a keyboard device */
+	int kybd;
 };
 
 /* add a connection to the list */
