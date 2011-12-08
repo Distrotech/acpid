@@ -1,6 +1,7 @@
 *~
 *.o
 *.d
+*.8.gz
 cscope.out
 acpid
 acpi_listen
