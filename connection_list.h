@@ -35,6 +35,7 @@ struct connection
 	int fd;
 
 	/* process incoming data on the connection */
+	/* ??? suggest passing a pointer to this connection struct */
 	void (* process)(int fd);
 
 	/* Optional.  Used by find_connection_name() to find the connection for a 
@@ -55,9 +56,13 @@ extern void add_connection(struct connection *p);
 extern void delete_connection(int fd);
 
 /* find a connection in the list by file descriptor */
+/* ??? This routine is unnecessary.  When we call the connection's process
+ *     routine, we should pass a pointer to the connection.  That will have
+ *     the usual fd along with everything else. */
 extern struct connection *find_connection(int fd);
 
 /* find a connection in the list by pathname */
+/* ??? unused last I checked */
 extern struct connection *find_connection_name(char *pathname);
 
 /* get the number of connections in the list */

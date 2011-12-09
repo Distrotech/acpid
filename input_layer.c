@@ -233,7 +233,7 @@ void process_input(int fd)
 	/* if we're getting scancodes, we probably have a keyboard */
 	if (event.type == EV_MSC  &&  event.code == MSC_SCAN) {
 		if (c)
-			c->kybd = 1;  // appears to be a keyboard device
+			c->kybd = 1;  /* appears to be a keyboard device */
 	}
 	
 	/* convert the event into a string */
@@ -242,14 +242,11 @@ void process_input(int fd)
 	if (str == NULL)
 		return;
 
-	/* If we suspect this is a keyboard, and we have enough space, tack on a 
-	 * "K" to the end of the event string. */
-	if (c->kybd  &&  strnlen(str, sizeof(str2)) <= sizeof(str2) - 3) {
-		/* strcpy() str to a new buffer */
+	/* If we suspect this is a keyboard, and we have enough space, tack a 
+	 * "K" on to the end of the event string. */
+	if (c  &&  c->kybd  &&  strnlen(str, sizeof(str2)) <= sizeof(str2) - 3) {
 		strcpy(str2, str);
-		/* strcat() on the " K" */
 		strcat(str2, " K");
-		/* set str to point to the new buffer */
 		str = str2;
 	}
 	
