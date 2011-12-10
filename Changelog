@@ -1,4 +1,4 @@
-* ???  Ted Felix <http://www.tedfelix.com>
+* Thu Dec 15 2011  Ted Felix <http://www.tedfelix.com>
   - 2.0.14 release
   - Fixed brace style.  (inotify_handler.c acpid.c)  (Ted Felix)
   - Added support for a "K" suffix on event strings to indicate that they
