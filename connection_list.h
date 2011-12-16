@@ -39,10 +39,8 @@ struct connection
 	void (* process)(int fd);
 
 	/* Optional.  Used by find_connection_name() to find the connection for a 
-	   specific file.  inotify_handler.c uses this to find the connection
-	   to delete when an input layer event file goes away.  Set to NULL
-	   if not specified.  Memory will be freed with free() when connection
-	   is deleted. */
+	   specific file.  Set to NULL if not specified.  Memory will be freed 
+	   with free() when connection is deleted. */
 	char *pathname;
 
 	/* 0 indicates this is probably not a keyboard device */
