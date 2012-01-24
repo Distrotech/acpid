@@ -45,17 +45,17 @@ man: $(MAN8)
 	for a in $^; do gzip -f -9 -c $$a > $$a.gz; done
 
 install_docs:
-	mkdir -p $(DESTDIR)/$(DOCDIR)
-	for a in $(DOCS); do install -m 0644 $$a $(DESTDIR)/$(DOCDIR) ; done
-	cp -a samples $(DESTDIR)/$(DOCDIR)
+	mkdir -p $(DESTDIR)$(DOCDIR)
+	for a in $(DOCS); do install -m 0644 $$a $(DESTDIR)$(DOCDIR) ; done
+	cp -a samples $(DESTDIR)$(DOCDIR)
 
 install: $(PROGS) man install_docs
-	mkdir -p $(DESTDIR)/$(SBINDIR)
-	mkdir -p $(DESTDIR)/$(BINDIR)
-	install -m 0750 acpid $(DESTDIR)/$(SBINDIR)
-	install -m 0755 acpi_listen $(DESTDIR)/$(BINDIR)
-	mkdir -p $(DESTDIR)/$(MANDIR)/man8
-	install -m 0644 $(MAN8GZ) $(DESTDIR)/$(MANDIR)/man8
+	mkdir -p $(DESTDIR)$(SBINDIR)
+	mkdir -p $(DESTDIR)$(BINDIR)
+	install -m 0750 acpid $(DESTDIR)$(SBINDIR)
+	install -m 0755 acpi_listen $(DESTDIR)$(BINDIR)
+	mkdir -p $(DESTDIR)$(MANDIR)/man8
+	install -m 0644 $(MAN8GZ) $(DESTDIR)$(MANDIR)/man8
 # You might want to run mandb(8) after install in case your system uses it.
 
 DISTTMP=/tmp
