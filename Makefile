@@ -1,7 +1,7 @@
 # Makefile for ACPI daemon
 
 # update these numbers for new releases
-VERSION = 2.0.14
+VERSION = 2.0.15
 
 OPT = -O2
 
