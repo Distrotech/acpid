@@ -30,6 +30,6 @@ extern int clientmax;
 extern int non_root_clients;
 
 extern int is_socket(int fd);
-extern void open_sock();
+extern void open_sock(void);
 
 #endif /* SOCK_H__ */

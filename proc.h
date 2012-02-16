@@ -25,6 +25,6 @@
 
 extern const char *eventfile;
 
-extern int open_proc();
+extern int open_proc(void);
 
 #endif /* PROC_H__ */

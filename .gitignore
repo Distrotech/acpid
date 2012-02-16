@@ -9,4 +9,15 @@ acpi_listen
 .anjuta
 .anjuta_sym_db.db
 .depend
-
+.deps
+Makefile.in
+Makefile
+aclocal.m4
+autom4te.cache
+build-aux
+config.h
+config.h.in
+config.log
+config.status
+configure
+stamp-h1

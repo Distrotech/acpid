@@ -11,7 +11,6 @@ Look into using libnl for netlink
   - Can this be done?
 
 DBUS support
-Re-implement autoconf/automake support
 Re-add ancillary files needed for wider distribution
 Add a main config file
  - support multiple event sources (such as named pipes)

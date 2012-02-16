@@ -29,6 +29,7 @@
 #include "libnetlink.h"
 
 #include "acpid.h"
+#include "acpi_ids.h"
 
 #define GENL_MAX_FAM_GRPS       256
 #define ACPI_EVENT_FAMILY_NAME          "acpi_event"
@@ -229,7 +230,7 @@ ctrl_done:
 
 /* initialize the ACPI IDs */
 static void
-acpi_ids_init()
+acpi_ids_init(void)
 {
 	genl_get_ids(ACPI_EVENT_FAMILY_NAME);
 
@@ -238,7 +239,7 @@ acpi_ids_init()
 
 /* returns the netlink family ID for ACPI event messages */
 __u16
-acpi_ids_getfamily()
+acpi_ids_getfamily(void)
 {
 	/* if the IDs haven't been initialized, initialize them */
 	if (initialized == 0)
@@ -249,7 +250,7 @@ acpi_ids_getfamily()
 
 /* returns the netlink multicast group ID for ACPI event messages */
 __u32
-acpi_ids_getgroup()
+acpi_ids_getgroup(void)
 {
 	/* if the IDs haven't been initialized, initialize them */
 	if (initialized == 0)

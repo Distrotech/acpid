@@ -22,9 +22,9 @@
 #define ACPI_IDS_H__
 
 /* returns the netlink family ID for ACPI event messages */
-extern __u16 acpi_ids_getfamily();
+extern __u16 acpi_ids_getfamily(void);
 
 /* returns the netlink multicast group ID for ACPI event messages */
-extern __u32 acpi_ids_getgroup();
+extern __u32 acpi_ids_getgroup(void);
 
 #endif /* ACPI_IDS_H__ */
