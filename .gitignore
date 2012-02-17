@@ -5,6 +5,7 @@
 cscope.out
 acpid
 acpi_listen
+kacpimon/kacpimon
 *.anjuta
 .anjuta
 .anjuta_sym_db.db

@@ -37,9 +37,10 @@ AC_FUNC_REALLOC
 AC_FUNC_STRNLEN
 AC_CHECK_FUNCS([alarm dup2 memset regcomp select socket strcasecmp strdup strerror strrchr strtol])
 
-AC_ARG_ENABLE([kacpimon],AS_HELP_STRING([--enable-kacpimon], [Build kacpimon]))
-AM_CONDITIONAL(KACPIMON, test "x$enable_kacpimon" = "xyes")
-AM_COND_IF([KACPIMON],[AC_CONFIG_FILES([kacpimon/Makefile])])
+# removed for now as kacpimon was not included in dist target
+#AC_ARG_ENABLE([kacpimon],AS_HELP_STRING([--enable-kacpimon], [Build kacpimon]))
+#AM_CONDITIONAL(KACPIMON, test "x$enable_kacpimon" = "xyes")
+#AM_COND_IF([KACPIMON],[AC_CONFIG_FILES([kacpimon/Makefile])])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile kacpimon/Makefile])
 AC_OUTPUT
