@@ -162,7 +162,7 @@ void monitor(void)
 
 // ---------------------------------------------------------------
 
-void close_all()
+void close_all(void)
 {
 	int i = 0;
 

@@ -45,15 +45,15 @@ extern void add_connection(struct connection *p);
 extern struct connection *find_connection(int fd);
 
 /* get the number of connections in the list */
-extern int get_number_of_connections();
+extern int get_number_of_connections(void);
 
 /* get a specific connection by index from the list */
 extern struct connection *get_connection(int i);
 
 /* get an fd_set with all the fd's that have been added to the list */
-extern const fd_set *get_fdset();
+extern const fd_set *get_fdset(void);
 
 /* get the highest fd that was added to the list */
-extern int get_highestfd();
+extern int get_highestfd(void);
 
 #endif /* CONNECTION_LIST_H__ */

@@ -88,7 +88,7 @@ find_connection(int fd)
 /*---------------------------------------------------------------*/
 
 int 
-get_number_of_connections()
+get_number_of_connections(void)
 {
 	return nconnections;
 }
@@ -107,7 +107,7 @@ get_connection(int i)
 /*---------------------------------------------------------------*/
 
 const fd_set *
-get_fdset()
+get_fdset(void)
 {
 	return &allfds;
 }
@@ -115,7 +115,7 @@ get_fdset()
 /*---------------------------------------------------------------*/
 
 int
-get_highestfd()
+get_highestfd(void)
 {
 	return highestfd;
 }
