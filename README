@@ -23,11 +23,14 @@ completely.  For example, with upstart, the proper incantation is usually:
 
 Version 2.0.15 introduced autoconf.  To build versions >= 2.0.15:
 
-  $ make distclean
-  $ autoreconf -i --force
   $ ./configure
   $ make
   $ sudo make install
+
+If you want to start from scratch, use autoreconf to regenerate the configure
+script from configure.ac and Makefile.am:
+
+  $ autoreconf -i --force
 
 Older versions (<= 2.0.14) of acpid simply required "make" to build:
 
