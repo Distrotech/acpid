@@ -1,7 +1,8 @@
 AM_DISTCHECK_CONFIGURE_FLAGS = --enable-kacpimon
 if KACPIMON
-DIST_SUBDIRS =   kacpimon
+DIST_SUBDIRS = kacpimon
 endif
+
 AM_CFLAGS = -Wall -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wshadow -Wstrict-prototypes -Wformat=2
 AM_CPPFLAGS = -include $(top_srcdir)/config.h
 

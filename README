@@ -23,7 +23,8 @@ completely.  For example, with upstart, the proper incantation is usually:
 
 Version 2.0.15 introduced autoconf.  To build versions >= 2.0.15:
 
-  $ autoreconf -i
+  $ make distclean
+  $ autoreconf -i --force
   $ ./configure
   $ make
   $ sudo make install

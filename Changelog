@@ -1,9 +1,16 @@
-* ??? ??? 15 2012  Ted Felix <http://www.tedfelix.com>
-  - 2.0.15 release
+* ??? Mar 15 2012  Ted Felix <http://www.tedfelix.com>
+  - 2.0.15 release (configure.ac)
   - man page improvements in response to Debian bug #656676.  
     (acpid.8 acpi_listen.8)  (Ted Felix)
-  - makefile change to get rid of double slashes on install paths.
+  X makefile change to get rid of double slashes on install paths.
+    Note: This change was lost due to introduction of autoconf which
+    wiped out the old Makefile.
     (Makefile)  (Gilles Espinasse)
+  - autoconf build system.
+    (Makefile Makefile.am README TODO acpi_ids.c acpi_ids.h acpid.h 
+    configure.ac connection_list.h event.c kacpimon/Makefile.am 
+    kacpimon/makefile proc.h sock.h)
+    (Cristian Rodriguez)
 
 * Thu Dec 15 2011  Ted Felix <http://www.tedfelix.com>
   - 2.0.14 release
