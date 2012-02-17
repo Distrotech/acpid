@@ -21,16 +21,17 @@ completely.  For example, with upstart, the proper incantation is usually:
 
   $ sudo initctl stop acpid
 
-Version 2.0.15 introduced autoconf.  To build versions >= 2.0.15:
+acpid version 2.0.15 introduced autoconf.  To build versions >= 2.0.15:
 
   $ ./configure
   $ make
   $ sudo make install
 
 If you want to start from scratch, use autoreconf to regenerate the configure
-script from configure.ac and Makefile.am:
+script from configure.ac and Makefile.am.  This is not normally needed, so
+be sure you understand autoreconf before using it.
 
-  $ autoreconf -i --force
+  $ autoreconf --install --force
 
 Older versions (<= 2.0.14) of acpid simply required "make" to build:
 

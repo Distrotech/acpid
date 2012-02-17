@@ -3,18 +3,24 @@ acpid Test Plan
 Suggestions
 
 - Run all these tests with valgrind to detect memory leaks.
-- It's best to test without a window manager running (such as GNOME or KDE) as they tend to handle acpi events on their own and override acpid.  To bring down X on a system that is configured with a graphical login, there's usually an "init" script you can run.  As an example, with Debian/GNOME, log off of your X/GNOME session, switch to another tty (e.g. Alt-Ctrl-F1), login, and do this:
-    sudo /etc/init.d/gdm stop
+- It's best to test without a window manager running (such as GNOME or KDE) as
+  they tend to handle acpi events on their own and override acpid.  To bring 
+  down X on a system that is configured with a graphical login, there's usually
+  an "init" script you can run.  As an example, with Debian/GNOME, log off of 
+  your X/GNOME session, switch to another tty (e.g. Alt-Ctrl-F1), login, and do
+  this:
+      sudo /etc/init.d/gdm stop
   It's different if you are using upstart:
-    sudo initctl stop gdm
+      sudo initctl stop gdm
   And systemd requires a different incantation:
-    [anyone care to enlighten me?]
+      [anyone care to enlighten me?]
   Now X is out of the way and you can test from the console.
 - You can kill acpid with "sudo killall acpid".  Or if you are using upstart:
-    sudo initctl stop acpid
+      sudo initctl stop acpid
   For systemd:
-    [anyone?]
-- To make testing more convenient, you can run acpid from a shell as "acpid -ld" to get maximum logging.  Use Ctrl-C to stop acpid.
+      [anyone?]
+- To make testing more convenient, you can run acpid from a shell as 
+  "acpid -ld" to get maximum logging.  Use Ctrl-C to stop acpid.
 
 Normal Paths
 
@@ -70,7 +76,8 @@ Start acpid against input layer and netlink.
 Try some events and make sure they are coming through.
 Connect a second USB keyboard.
 Check logging to see if acpid has found the new keyboard.
-Try some events from the second USB keyboard and make sure they are coming through.
+Try some events from the second USB keyboard and make sure they are coming 
+through.
 
 
 Debugging Paths
@@ -80,8 +87,10 @@ Run acpid without the -l option and make sure no events are logged to syslog.
 Run acpid with the -l option and make sure events are logged to syslog.
 
 * debug mode
-Run acpid with the -d option and note that it runs in the foreground and provides debugging info to the console.
-acpid also supports up to 4 debug levels in the event handler.  Might want to try "-dddd" and see what happens.
+Run acpid with the -d option and note that it runs in the foreground and 
+provides debugging info to the console.
+acpid also supports up to 4 debug levels in the event handler.  Might want 
+to try "-dddd" and see what happens.
 
 * foreground mode
 Run acpid with the -f option and note that it runs in the foreground.

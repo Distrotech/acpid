@@ -1,4 +1,4 @@
-* ??? Mar 15 2012  Ted Felix <http://www.tedfelix.com>
+* Thu Mar 15 2012  Ted Felix <http://www.tedfelix.com>
   - 2.0.15 release (configure.ac)
   - man page improvements in response to Debian bug #656676.  
     (acpid.8 acpi_listen.8)  (Ted Felix)
@@ -6,13 +6,16 @@
     Note: This change was lost due to introduction of autoconf which
     wiped out the old Makefile.
     (Makefile)  (Gilles Espinasse)
-  - autoconf build system.
+  - Switched from Makefile to autoconf build system.
     (Makefile Makefile.am README TODO acpi_ids.c acpi_ids.h acpid.h 
     configure.ac connection_list.h event.c kacpimon/Makefile.am 
     kacpimon/makefile proc.h sock.h)
     (Cristian Rodriguez)
-  - Fixes to man build warnings uncovered by new gcc settings from autoconf.
-    (...)
+  - Fixes to many build warnings uncovered by new gcc settings from autoconf.
+    (inotify_handler.c input_layer.c kacpimon/acpi_ids.c kacpimon/acpi_ids.h 
+    kacpimon/connection_list.c kacpimon/connection_list.h 
+    kacpimon/input_layer.c kacpimon/kacpimon.c kacpimon/netlink.c netlink.c
+    proc.c sock.c)
     (Ted Felix)
 
 * Thu Dec 15 2011  Ted Felix <http://www.tedfelix.com>
