@@ -40,13 +40,15 @@
 #include "connection_list.h"
 #include "kacpimon.h"
 
+#include "input_layer.h"
+
 #define DIM(a)  (sizeof(a) / sizeof(a[0]))
 
 #define INPUT_LAYER_FS "/dev/input/event*"
 
 /*-----------------------------------------------------------------*/
 /* called when an input layer event is received */
-void process_input(int fd)
+static void process_input(int fd)
 {
 	struct input_event event;
 	ssize_t nbytes;

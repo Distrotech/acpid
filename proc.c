@@ -32,6 +32,8 @@
 #include "event.h"
 #include "connection_list.h"
 
+#include "proc.h"
+
 const char *eventfile = ACPID_EVENTFILE;
 
 static char *read_line(int fd);

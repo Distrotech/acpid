@@ -28,6 +28,8 @@
 #include "genetlink.h"
 #include "libnetlink.h"
 
+#include "acpi_ids.h"
+
 #define GENL_MAX_FAM_GRPS       256
 #define ACPI_EVENT_FAMILY_NAME          "acpi_event"
 #define ACPI_EVENT_MCAST_GROUP_NAME     "acpi_mc_group"

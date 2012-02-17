@@ -35,6 +35,8 @@
 #include "ud_socket.h"
 #include "connection_list.h"
 
+#include "sock.h"
+
 const char *socketfile = ACPID_SOCKETFILE;
 const char *socketgroup;
 mode_t socketmode = ACPID_SOCKETMODE;

@@ -43,6 +43,8 @@
 #include "connection_list.h"
 #include "event.h"
 
+#include "input_layer.h"
+
 #define DIM(a)  (sizeof(a) / sizeof(a[0]))
 
 struct evtab_entry {
@@ -182,7 +184,7 @@ need_event(int type, int code)
 
 /*-----------------------------------------------------------------*/
 /* called when an input layer event is received */
-void process_input(int fd)
+static void process_input(int fd)
 {
 	struct input_event event;
 	ssize_t nbytes;

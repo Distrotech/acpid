@@ -45,6 +45,8 @@
 #include "input_layer.h"
 #include "netlink.h"
 
+#include "kacpimon.h"
+
 /* ??? Isn't this in a system header someplace? */
 #define max(a, b)  (((a)>(b))?(a):(b))
 
@@ -58,7 +60,7 @@ int exitflag = 0;
  *  Old /proc/acpi/event interface
  ****************************************************************/
 
-void process_proc(int fd)
+static void process_proc(int fd)
 {
 	const int buffsize = 1024;
 	char buffer[buffsize];
@@ -83,7 +85,7 @@ void process_proc(int fd)
 
 // ---------------------------------------------------------------
 
-void open_proc(void)
+static void open_proc(void)
 {
 	char *filename = "/proc/acpi/event";
 	int fd;
@@ -118,7 +120,7 @@ void open_proc(void)
  *  Main Program Functions
  ****************************************************************/
 
-void monitor(void)
+static void monitor(void)
 {
 	while (exitflag == 0)
 	{
@@ -162,7 +164,7 @@ void monitor(void)
 
 // ---------------------------------------------------------------
 
-void close_all(void)
+static void close_all(void)
 {
 	int i = 0;
 

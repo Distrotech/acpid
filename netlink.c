@@ -45,6 +45,8 @@
 #include "acpi_ids.h"
 #include "connection_list.h"
 
+#include "netlink.h"
+
 static void
 format_netlink(struct nlmsghdr *msg)
 {
@@ -110,7 +112,7 @@ format_netlink(struct nlmsghdr *msg)
 }
 
 /* (based on rtnl_listen() in libnetlink.c) */
-void
+static void
 process_netlink(int fd)
 {
 	int status;

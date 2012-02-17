@@ -41,7 +41,9 @@
 #include "acpi_ids.h"
 #include "connection_list.h"
 
-/* ??? Isn't this in a system header someplace? */
+#include "netlink.h"
+
+/* Dangerous.  Don't try max(i++, j++). */
 #define max(a, b)  (((a)>(b))?(a):(b))
 
 static void
@@ -84,7 +86,7 @@ format_netlink(struct nlmsghdr *msg)
 }
 
 /* (based on rtnl_listen() in libnetlink.c) */
-void
+static void
 process_netlink(int fd)
 {
 	int status;

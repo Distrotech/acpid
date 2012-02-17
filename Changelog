@@ -11,6 +11,9 @@
     configure.ac connection_list.h event.c kacpimon/Makefile.am 
     kacpimon/makefile proc.h sock.h)
     (Cristian Rodriguez)
+  - Fixes to man build warnings uncovered by new gcc settings from autoconf.
+    (...)
+    (Ted Felix)
 
 * Thu Dec 15 2011  Ted Felix <http://www.tedfelix.com>
   - 2.0.14 release

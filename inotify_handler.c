@@ -37,9 +37,11 @@
 #include "connection_list.h"
 #include "input_layer.h"
 
+#include "inotify_handler.h"
+
 /*-----------------------------------------------------------------*/
 /* called when an inotify event is received */
-void process_inotify(int fd)
+static void process_inotify(int fd)
 {
 	int bytes;
 	/* union to avoid strict-aliasing problems */
