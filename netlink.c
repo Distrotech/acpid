@@ -143,7 +143,7 @@ process_netlink(int fd)
 	iov.iov_len = sizeof(buf);
 	
 	/* read the data into the buffer */
-	status = recvmsg(fd, &msg, 0);
+	status = recvmsg(fd, &msg, MSG_CMSG_CLOEXEC);
 
 	/* if there was a problem, print a message and keep trying */
 	if (status < 0) {

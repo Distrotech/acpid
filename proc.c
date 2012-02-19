@@ -88,7 +88,7 @@ open_proc()
 	int fd;
 	struct connection c;
 	
-	fd = open(eventfile, O_RDONLY);
+	fd = open(eventfile, O_RDONLY | O_CLOEXEC);
 	if (fd < 0) {
 		if (errno == ENOENT) {
 			acpid_log(LOG_DEBUG, "Deprecated %s was not found.  "
@@ -100,11 +100,6 @@ open_proc()
 		return -1;
 		
 	}
-
-    /* Make sure scripts we exec() (in event.c) don't get our file 
-       descriptors. */
-    fcntl(fd, F_SETFD, FD_CLOEXEC);
-
 	acpid_log(LOG_DEBUG, "proc fs opened successfully");
 
 	/* add a connection to the list */

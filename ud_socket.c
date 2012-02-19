@@ -37,7 +37,7 @@ ud_create_socket(const char *name)
     /* JIC */
 	unlink(name);
 
-	fd = socket(AF_UNIX, SOCK_STREAM, 0);
+	fd = socket(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC | SOCK_NONBLOCK, 0);
 	if (fd < 0) {
 		return fd;
 	}
@@ -103,7 +103,7 @@ ud_connect(const char *name)
         return -1;
     }
     
-	fd = socket(AF_UNIX, SOCK_STREAM, 0);
+	fd = socket(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0);
 	if (fd < 0) {
 		return fd;
 	}

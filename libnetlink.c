@@ -43,7 +43,7 @@ int rtnl_open_byproto(struct rtnl_handle *rth, unsigned subscriptions,
 
 	memset(rth, 0, sizeof(rth));
 
-	rth->fd = socket(AF_NETLINK, SOCK_RAW, protocol);
+	rth->fd = socket(AF_NETLINK, SOCK_RAW | SOCK_CLOEXEC, protocol);
 	if (rth->fd < 0) {
 		perror("Cannot open netlink socket");
 		return -1;
@@ -171,7 +171,7 @@ int rtnl_dump_filter(struct rtnl_handle *rth,
 		struct nlmsghdr *h;
 
 		iov.iov_len = sizeof(buf);
-		status = recvmsg(rth->fd, &msg, 0);
+		status = recvmsg(rth->fd, &msg, MSG_CMSG_CLOEXEC);
 
 		if (status < 0) {
 			if (errno == EINTR)
@@ -274,7 +274,7 @@ int rtnl_talk(struct rtnl_handle *rtnl, struct nlmsghdr *n, pid_t peer,
 
 	while (1) {
 		iov.iov_len = sizeof(buf);
-		status = recvmsg(rtnl->fd, &msg, 0);
+		status = recvmsg(rtnl->fd, &msg, MSG_CMSG_CLOEXEC);
 
 		if (status < 0) {
 			if (errno == EINTR)
@@ -378,7 +378,7 @@ int rtnl_listen(struct rtnl_handle *rtnl,
 	iov.iov_base = buf;
 	while (1) {
 		iov.iov_len = sizeof(buf);
-		status = recvmsg(rtnl->fd, &msg, 0);
+		status = recvmsg(rtnl->fd, &msg, MSG_CMSG_CLOEXEC);
 
 		if (status < 0) {
 			if (errno == EINTR)

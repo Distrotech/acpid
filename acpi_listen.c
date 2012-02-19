@@ -75,8 +75,6 @@ main(int argc, char **argv)
 			progname, socketfile, strerror(errno));
 		exit(EXIT_FAILURE);
 	}
-	fcntl(sock_fd, F_SETFD, FD_CLOEXEC);
-
 	/* set stdout to be line buffered */
 	setvbuf(stdout, NULL, _IOLBF, 0);
 
