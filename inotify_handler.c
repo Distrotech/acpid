@@ -118,7 +118,7 @@ void open_inotify(void)
 	struct connection c;
 
 	/* set up inotify */
-	fd = inotify_init();
+	fd = inotify_init1(IN_CLOEXEC);
 	
 	if (fd < 0) {
 		acpid_log(LOG_ERR, "inotify_init() failed: %s (%d)",

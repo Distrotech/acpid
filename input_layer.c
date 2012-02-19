@@ -322,11 +322,7 @@ int open_inputfile(const char *filename)
 	int fd;
 	struct connection c;
 
-	fd = open(filename, O_RDONLY | O_NONBLOCK);
-
-    /* Make sure scripts we exec() (in event.c) don't get our file 
-       descriptors. */
-    fcntl(fd, F_SETFD, FD_CLOEXEC);
+	fd = open(filename, O_RDONLY | O_NONBLOCK | O_CLOEXEC);
 
 	if (fd >= 0) {
 		char evname[256];
