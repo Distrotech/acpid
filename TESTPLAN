@@ -14,6 +14,8 @@ Suggestions
       sudo initctl stop gdm
   And systemd requires a different incantation:
       [anyone care to enlighten me?]
+  LightDM in Ubuntu 11.10 (and others) doesn't seem to care about the power 
+  button.  So no need to stop it.  Just log out.
   Now X is out of the way and you can test from the console.
 - You can kill acpid with "sudo killall acpid".  Or if you are using upstart:
       sudo initctl stop acpid
