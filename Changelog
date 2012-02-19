@@ -17,6 +17,14 @@
     kacpimon/input_layer.c kacpimon/kacpimon.c kacpimon/netlink.c netlink.c
     proc.c sock.c)
     (Ted Felix)
+  - fcntl() calls to set FD_CLOEXEC have been removed and replaced with
+    CLOEXEC flags within the various open(), recvmsg() and other calls.
+    This requires kernel version 2.6.23 and above.
+    (acpi_listen.c inotify_handler.c input_layer.c libnetlink.c netlink.c
+    proc.c ud_socket.c)
+    (Cristian Rodriguez)
+  - Added SOCK_NONBLOCK to ud_create_socket().
+    (ud_socket.c) (Cristian Rodriguez)
 
 * Thu Dec 15 2011  Ted Felix <http://www.tedfelix.com>
   - 2.0.14 release

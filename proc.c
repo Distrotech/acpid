@@ -88,6 +88,8 @@ open_proc()
 	int fd;
 	struct connection c;
 	
+	/* O_CLOEXEC: Make sure scripts we exec() (in event.c) don't get our file 
+       descriptors. */
 	fd = open(eventfile, O_RDONLY | O_CLOEXEC);
 	if (fd < 0) {
 		if (errno == ENOENT) {

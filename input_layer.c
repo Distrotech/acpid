@@ -321,7 +321,9 @@ int open_inputfile(const char *filename)
 {
 	int fd;
 	struct connection c;
-
+	
+	/* O_CLOEXEC: Make sure scripts we exec() (in event.c) don't get our file 
+       descriptors. */
 	fd = open(filename, O_RDONLY | O_NONBLOCK | O_CLOEXEC);
 
 	if (fd >= 0) {

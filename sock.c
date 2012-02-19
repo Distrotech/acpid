@@ -119,6 +119,7 @@ open_sock()
 	/* if this is a socket passed in via stdin by systemd */
 	if (is_socket(STDIN_FILENO)) {
 		fd = STDIN_FILENO;
+		/* ??? Move CLOEXEC and NONBLOCK settings below up to here? */
 	} else {
 		/* create our own socket */
 		fd = ud_create_socket(socketfile);
@@ -158,7 +159,9 @@ open_sock()
 		}
 	}
 
-	/* don't leak fds when execing */
+	/* Don't leak fds when execing.
+	 * ud_create_socket() already does this, but there is no guarantee that
+	 * a socket sent in via STDIN will have this set. */
 	if (fcntl(fd, F_SETFD, FD_CLOEXEC) < 0) {
 		close(fd);
 		acpid_log(LOG_ERR, "fcntl() on socket %s for FD_CLOEXEC: %s", 
@@ -166,7 +169,9 @@ open_sock()
 		return;
 	}
 
-	/* avoid a potential hang */
+	/* Avoid a potential hang.
+	 * ud_create_socket() already does this, but there is no guarantee that
+	 * a socket sent in via STDIN will have this set. */
 	if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0) {
 		close(fd);
 		acpid_log(LOG_ERR, "fcntl() on socket %s for O_NONBLOCK: %s", 
