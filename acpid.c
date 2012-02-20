@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <getopt.h>
+#include <dirent.h>
 
 #include "acpid.h"
 #include "log.h"
@@ -317,12 +318,22 @@ handle_cmdline(int *argc, char ***argv)
 static void
 close_fds(void)
 {
-	int fd, max;
-	max = sysconf(_SC_OPEN_MAX);
-	for (fd = 3; fd < max; fd++)
-		close(fd);
-}
+    struct dirent *dent;
+    DIR *dirp;
+    char *endp;
+    long fd;
 
+    if ((dirp = opendir("/proc/self/fd")) != NULL) {
+        while ((dent = readdir(dirp)) != NULL) {
+            fd = strtol(dent->d_name, &endp, 10);
+            if (dent->d_name != endp && *endp == '\0' &&
+                fd >= 3 && fd != dirfd(dirp)) {
+                close((int) fd);
+            }
+        }
+        closedir(dirp);
+    }
+}
 static int
 daemonize(void)
 {
