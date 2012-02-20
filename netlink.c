@@ -169,7 +169,7 @@ process_netlink(int fd)
 	/* check to see if the address length has changed */
 	if (msg.msg_namelen != sizeof(nladdr)) {
 		acpid_log(LOG_WARNING, "netlink unexpected length: "
-			"%d   expected: %d", msg.msg_namelen, sizeof(nladdr));
+			"%d   expected: %zd", msg.msg_namelen, sizeof(nladdr));
 		return;
 	}
 	

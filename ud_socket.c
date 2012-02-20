@@ -28,7 +28,7 @@ ud_create_socket(const char *name)
     if (strnlen(name, sizeof(uds_addr.sun_path)) > 
         sizeof(uds_addr.sun_path) - 1) {
         acpid_log(LOG_ERR, "ud_create_socket(): "
-            "socket filename longer than %u characters: %s",
+            "socket filename longer than %zu characters: %s",
             sizeof(uds_addr.sun_path) - 1, name);
         errno = EINVAL;
         return -1;
@@ -97,7 +97,7 @@ ud_connect(const char *name)
 
     if (strnlen(name, sizeof(addr.sun_path)) > sizeof(addr.sun_path) - 1) {
         acpid_log(LOG_ERR, "ud_connect(): "
-            "socket filename longer than %u characters: %s",
+            "socket filename longer than %zu characters: %s",
             sizeof(addr.sun_path) - 1, name);
         errno = EINVAL;
         return -1;

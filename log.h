@@ -32,6 +32,6 @@
  */
 extern int log_debug_to_stderr;
 
-extern int acpid_log(int level, const char *fmt, ...);
+extern int acpid_log(int level, const char *fmt, ...) __attribute__((format(printf,2,3)));
 
 #endif /* LOG_H__ */

@@ -226,7 +226,7 @@ static void process_input(int fd)
 	
 	if (nbytes != sizeof(event)) {
 		acpid_log(LOG_WARNING, "input layer unexpected length: "
-			"%d   expected: %d", nbytes, sizeof(event));
+			"%zd   expected: %zd", nbytes, sizeof(event));
 		return;
 	}
 
