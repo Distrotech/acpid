@@ -49,10 +49,7 @@ int non_root_clients;
 int
 is_socket(int fd)
 {
-	int v;
-	socklen_t l = sizeof(int);
-
-	return (getsockopt(fd, SOL_SOCKET, SO_TYPE, (char *)&v, &l) == 0);
+    return (isfdtype(fd, S_IFSOCK) == 1);
 }
 
 /* accept a new client connection */
@@ -129,7 +126,7 @@ open_sock()
 			exit(EXIT_FAILURE);
 		}
 
-		if (chmod(socketfile, socketmode) < 0) {
+		if (fchmod(fd, socketmode) < 0) {
 			close(fd);
 			acpid_log(LOG_ERR, "chmod() on socket %s: %s", 
 		        socketfile, strerror(errno));
@@ -146,12 +143,12 @@ open_sock()
 				acpid_log(LOG_ERR, "group %s does not exist", socketgroup);
 				exit(EXIT_FAILURE);
 			}
-			if (stat(socketfile, &buf) < 0) {
+			if (fstat(fd, &buf) < 0) {
 				acpid_log(LOG_ERR, "can't stat %s: %s", 
 		            socketfile, strerror(errno));
 				exit(EXIT_FAILURE);
 			}
-			if (chown(socketfile, buf.st_uid, gr->gr_gid) < 0) {
+			if (fchown(fd, buf.st_uid, gr->gr_gid) < 0) {
 				acpid_log(LOG_ERR, "can't chown %s: %s", 
 		            socketfile, strerror(errno));
 				exit(EXIT_FAILURE);
