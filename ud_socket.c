@@ -3,6 +3,10 @@
  * A few  routines for handling UNIX domain sockets
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -70,7 +74,7 @@ ud_accept(int listenfd, struct ucred *cred)
 		struct sockaddr_un cliaddr;
 		socklen_t len = sizeof(struct sockaddr_un);
 
-		newsock = accept(listenfd, (struct sockaddr *)&cliaddr, &len);
+		newsock = accept4(listenfd, (struct sockaddr *)&cliaddr, &len, SOCK_CLOEXEC|SOCK_NONBLOCK);
 		if (newsock < 0) {
 			if (errno == EINTR) {
 				continue; /* signal */

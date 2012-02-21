@@ -20,6 +20,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -58,7 +62,7 @@ process_sock(int fd)
 {
 	int cli_fd;
 	struct ucred creds;
-	char buf[32];
+	char *buf;
 	static int accept_errors;
 
 	/* accept and add to our lists */
@@ -85,25 +89,13 @@ process_sock(int fd)
 		non_root_clients++;
 	}
 
-    /* don't leak fds when execing */
-	if (fcntl(cli_fd, F_SETFD, FD_CLOEXEC) < 0) {
-		close(cli_fd);
-		acpid_log(LOG_ERR, "fcntl() on client for FD_CLOEXEC: %s", 
-            strerror(errno));
-		return;
-    }
-
-    /* don't allow clients to block this */
-    if (fcntl(cli_fd, F_SETFL, O_NONBLOCK) < 0) {
-		close(cli_fd);
-		acpid_log(LOG_ERR, "fcntl() on client for O_NONBLOCK: %s", 
-            strerror(errno));
-		return;
-    }
-
-    snprintf(buf, sizeof(buf)-1, "%d[%d:%d]",
-		 creds.pid, creds.uid, creds.gid);
-	acpid_add_client(cli_fd, buf);
+    if(asprintf(&buf, "%d[%d:%d]", creds.pid, creds.uid, creds.gid) < 0) {
+        close(cli_fd);
+        acpid_log(LOG_ERR, "asprintf: %s", strerror(errno));
+        return;
+     }
+        acpid_add_client(cli_fd, buf);
+        free(buf);
 }
 
 /* set up the socket for client connections */
