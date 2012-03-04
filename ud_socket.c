@@ -74,15 +74,10 @@ ud_accept(int listenfd, struct ucred *cred)
 		struct sockaddr_un cliaddr;
 		socklen_t len = sizeof(struct sockaddr_un);
 
-		newsock = accept4(listenfd, (struct sockaddr *)&cliaddr, &len, SOCK_CLOEXEC|SOCK_NONBLOCK);
+		newsock = TEMP_FAILURE_RETRY (accept4(listenfd, (struct sockaddr *)&cliaddr, &len, SOCK_CLOEXEC|SOCK_NONBLOCK));
 		if (newsock < 0) {
-			if (errno == EINTR) {
-				continue; /* signal */
-			}
-		
 			return newsock;
 		}
-
 		if (cred) {
 			len = sizeof(struct ucred);
 			getsockopt(newsock,SOL_SOCKET,SO_PEERCRED,cred,&len);

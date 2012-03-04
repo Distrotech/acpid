@@ -171,11 +171,9 @@ int rtnl_dump_filter(struct rtnl_handle *rth,
 		struct nlmsghdr *h;
 
 		iov.iov_len = sizeof(buf);
-		status = recvmsg(rth->fd, &msg, MSG_CMSG_CLOEXEC);
+		status = TEMP_FAILURE_RETRY ( recvmsg(rth->fd, &msg, MSG_CMSG_CLOEXEC) );
 
 		if (status < 0) {
-			if (errno == EINTR)
-				continue;
 			perror("OVERRUN");
 			continue;
 		}
@@ -274,11 +272,9 @@ int rtnl_talk(struct rtnl_handle *rtnl, struct nlmsghdr *n, pid_t peer,
 
 	while (1) {
 		iov.iov_len = sizeof(buf);
-		status = recvmsg(rtnl->fd, &msg, MSG_CMSG_CLOEXEC);
+		status = TEMP_FAILURE_RETRY ( recvmsg(rtnl->fd, &msg, MSG_CMSG_CLOEXEC) );
 
 		if (status < 0) {
-			if (errno == EINTR)
-				continue;
 			perror("OVERRUN");
 			continue;
 		}
@@ -378,11 +374,9 @@ int rtnl_listen(struct rtnl_handle *rtnl,
 	iov.iov_base = buf;
 	while (1) {
 		iov.iov_len = sizeof(buf);
-		status = recvmsg(rtnl->fd, &msg, MSG_CMSG_CLOEXEC);
+		status = TEMP_FAILURE_RETRY ( recvmsg(rtnl->fd, &msg, MSG_CMSG_CLOEXEC) );
 
 		if (status < 0) {
-			if (errno == EINTR)
-				continue;
 			perror("OVERRUN");
 			continue;
 		}
@@ -443,11 +437,9 @@ int rtnl_from_file(FILE *rtnl, rtnl_filter_t handler,
 		int err, len;
 		int l;
 
-		status = fread(&buf, 1, sizeof(*h), rtnl);
+		status = TEMP_FAILURE_RETRY ( fread(&buf, 1, sizeof(*h), rtnl) );
 
 		if (status < 0) {
-			if (errno == EINTR)
-				continue;
 			perror("rtnl_from_file: fread");
 			return -1;
 		}

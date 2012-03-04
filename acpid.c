@@ -150,11 +150,9 @@ main(int argc, char **argv)
 		readfds = *get_fdset();
 
 		/* wait on data */
-		nready = select(get_highestfd() + 1, &readfds, NULL, NULL, NULL);
+		nready = TEMP_FAILURE_RETRY(select(get_highestfd() + 1, &readfds, NULL, NULL, NULL));
 
-		if (nready < 0  &&  errno == EINTR) {
-			continue;
-		} else if (nready < 0) {
+		if (nready < 0) {
 			acpid_log(LOG_ERR, "select(): %s", strerror(errno));
 			continue;
 		}

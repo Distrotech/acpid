@@ -143,14 +143,10 @@ process_netlink(int fd)
 	iov.iov_len = sizeof(buf);
 	
 	/* read the data into the buffer */
-	status = recvmsg(fd, &msg, MSG_CMSG_CLOEXEC);
+	status = TEMP_FAILURE_RETRY ( recvmsg(fd, &msg, MSG_CMSG_CLOEXEC) );
 
 	/* if there was a problem, print a message and keep trying */
 	if (status < 0) {
-		/* if we were interrupted by a signal, bail */
-		if (errno == EINTR)
-			return;
-		
 		acpid_log(LOG_ERR, "netlink read error: %s (%d)",
 			strerror(errno), errno);
 		if (++nerrs >= ACPID_MAX_ERRS) {
