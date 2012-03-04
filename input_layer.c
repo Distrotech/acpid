@@ -193,7 +193,7 @@ static void process_input(int fd)
 	struct connection *c;
 	char str2[100];
 
-	nbytes = read(fd, &event, sizeof(event));
+	nbytes = TEMP_FAILURE_RETRY ( read(fd, &event, sizeof(event)) );
 
 	if (nbytes == 0) {
 		acpid_log(LOG_WARNING, "input layer connection closed");
@@ -201,9 +201,6 @@ static void process_input(int fd)
 	}
 	
 	if (nbytes < 0) {
-		/* if it's a signal, bail */
-		if (errno == EINTR)
-			return;
 		if (errno == ENODEV) {
 			acpid_log(LOG_WARNING, "input device has been disconnected, fd %d",
 			          fd);

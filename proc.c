@@ -131,8 +131,8 @@ read_line(int fd)
 
 		/* only go to BUFLEN-1 so there will always be a 0 at the end */
 		while (i < BUFLEN-1) {
-			r = read(fd, buf+i, 1);
-			if (r < 0 && errno != EINTR) {
+			r = TEMP_FAILURE_RETRY(read(fd, buf+i, 1));
+			if (r < 0) {
 				/* we should do something with the data */
 				acpid_log(LOG_ERR, "read(): %s",
 					strerror(errno));

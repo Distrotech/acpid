@@ -710,9 +710,9 @@ safe_write(int fd, const char *buf, int len)
 	int ntries = NTRIES;
 
 	do {
-		r = write(fd, buf+ttl, len-ttl);
+		r = TEMP_FAILURE_RETRY (write(fd, buf+ttl, len-ttl) );
 		if (r < 0) {
-			if (errno != EAGAIN && errno != EINTR) {
+			if (errno != EAGAIN) {
 				/* a legit error */
 				return r;
 			}

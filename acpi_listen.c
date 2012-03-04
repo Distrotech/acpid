@@ -215,8 +215,8 @@ read_line(int fd)
 		memset(buf+i, 0, buflen-i);
 
 		while (i < buflen) {
-			r = read(fd, buf+i, 1);
-			if (r < 0 && errno != EINTR) {
+			r = TEMP_FAILURE_RETRY (read(fd, buf+i, 1) );
+			if (r < 0) {
 				/* we should do something with the data */
 				fprintf(stderr, "ERR: read(): %s\n",
 					strerror(errno));
