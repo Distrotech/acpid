@@ -1,9 +1,9 @@
 * Thu Mar 15 2012  Ted Felix <http://www.tedfelix.com>
   - 2.0.15 release
     (configure.ac)  (Ted Felix)
-  - man page improvements in response to Debian bug #656676.  
+  - Improve man page (Debian bug #656676).  
     (acpid.8 acpi_listen.8)  (Ted Felix)
-  X makefile change to get rid of double slashes on install paths.
+  X Change makefile to get rid of double slashes on install paths.
     Note: This change was lost due to introduction of autoconf which
     wiped out the old Makefile.
     (Makefile)  (Gilles Espinasse)
@@ -13,7 +13,7 @@
     configure.ac connection_list.h event.c kacpimon/Makefile.am 
     kacpimon/makefile proc.h sock.h)
     (Cristian Rodriguez)
-  - Fixes many build warnings uncovered by new gcc settings from autoconf.
+  - Fix build warnings uncovered by new gcc settings from autoconf.
     (inotify_handler.c input_layer.c kacpimon/acpi_ids.c kacpimon/acpi_ids.h 
     kacpimon/connection_list.c kacpimon/connection_list.h 
     kacpimon/input_layer.c kacpimon/kacpimon.c kacpimon/netlink.c netlink.c
@@ -27,18 +27,21 @@
     (Cristian Rodriguez)
   - Add SOCK_NONBLOCK to ud_create_socket().
     (ud_socket.c) (Cristian Rodriguez)
-  - isfdtype() instead of getsockopt() in is_socket().  Use fchmod(), 
+  - Use isfdtype() instead of getsockopt() in is_socket().  Use fchmod(), 
     fstat(), and fchown() instead of the non-"f" versions in open_sock().
     (sock.c) (Cristian Rodriguez)
   - Use __attribute__ for argument checking in acpid_log().
     (input_layer.c log.h netlink.c ud_socket.c) (Cristian Rodriguez)
-  - Close only the fds we have open in close_fds().
+  - Close only the open fds in close_fds().
     (acpid.c) (Cristian Rodriguez)
   - Use accept4() with SOCK_CLOEXEC and SOCK_NONBLOCK in ud_accept().
     Remove unnecessary calls to fcntl() in process_sock().  
     (sock.c ud_socket.c) (Cristian Rodriguez)
   - Use asprintf() instead of snprintf() in process_sock().
     (sock.c) (Cristian Rodriguez)
+  - Use TEMP_FAILURE_RETRY macro instead of bogus checks for EINTR.
+    (acpi_listen.c acpid.c event.c input_layer.c libnetlink.c netlink.c 
+    proc.c ud_socket.c) (Cristian Rodriguez)
 
 * Thu Dec 15 2011  Ted Felix <http://www.tedfelix.com>
   - 2.0.14 release
