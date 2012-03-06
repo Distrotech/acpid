@@ -76,7 +76,7 @@ static void free_rule(struct rule *r);
 static void lock_rules(void);
 static void unlock_rules(void);
 static sigset_t *signals_handled(void);
-static struct rule *parse_file(const char *file);
+static struct rule *parse_file(int fd_rule, const char *file);
 static struct rule *parse_client(int client);
 static int do_cmd_rule(struct rule *r, const char *event);
 static int do_client_rule(struct rule *r, const char *event);
@@ -92,7 +92,6 @@ acpid_read_conf(const char *confdir)
 {
 	DIR *dir;
 	struct dirent *dirent;
-	char *file = NULL;
 	int nrules = 0;
 	regex_t preg;
 	int rc = 0;
@@ -117,51 +116,50 @@ acpid_read_conf(const char *confdir)
 
 	/* scan all the files */
 	while ((dirent = readdir(dir))) {
-		int len;
 		struct rule *r;
 		struct stat stat_buf;
-
-		len = strlen(dirent->d_name);
-
+        char *file = NULL;
+        int fd_rule;
 		/* skip "." and ".." */
 		if (strncmp(dirent->d_name, ".", sizeof(dirent->d_name)) == 0)
 			continue;
 		if (strncmp(dirent->d_name, "..", sizeof(dirent->d_name)) == 0)
 			continue;
 
+        if(asprintf(&file, "%s/%s", confdir, dirent->d_name) < 0) {
+            acpid_log(LOG_ERR, "asprintf: %s", strerror(errno));
+            unlock_rules();
+            return -1;
+        }
 		/* skip any files that don't match the run-parts convention */
 		if (regexec(&preg, dirent->d_name, 0, NULL, 0) != 0) {
-			acpid_log(LOG_INFO, "skipping conf file %s/%s", 
-				confdir, dirent->d_name);
+            free(file);
+			acpid_log(LOG_INFO, "skipping conf file %s", file);
 			continue;
 		}
-
-		/* Compute the length of the full path name adding one for */
-		/* the slash and one more for the NULL. */
-		len += strlen(confdir) + 2;
-
-		file = malloc(len);
-		if (!file) {
-			acpid_log(LOG_ERR, "malloc(): %s", strerror(errno));
-			unlock_rules();
-			return -1;
-		}
-		snprintf(file, len, "%s/%s", confdir, dirent->d_name);
-
+        if(dirent->d_type != DT_REG) { /* may be DT_UNKNOWN ...*/
 		/* allow only regular files and symlinks to files */
-		if (stat(file, &stat_buf) != 0) {
-			acpid_log(LOG_ERR, "stat(%s): %s", file,
-				strerror(errno));
-			free(file);
-			continue; /* keep trying the rest of the files */
-		}
-		if (!S_ISREG(stat_buf.st_mode)) {
-			acpid_log(LOG_INFO, "skipping non-file %s", file);
-			free(file);
-			continue; /* skip non-regular files */
-		}
-
-		r = parse_file(file);
+		    if (fstatat(dirfd(dir), dirent->d_name, &stat_buf, 0) != 0) {
+			    acpid_log(LOG_ERR, "stat(%s): %s", file,
+				    strerror(errno));
+			        free(file);
+			        continue; /* keep trying the rest of the files */
+		       }
+		    if (!S_ISREG(stat_buf.st_mode)) {
+			    acpid_log(LOG_INFO, "skipping non-file %s", file);
+			    free(file);
+			    continue; /* skip non-regular files */
+		    }
+        }
+        if((fd_rule = openat(dirfd(dir), dirent->d_name, O_RDONLY|O_CLOEXEC|O_NONBLOCK)) == -1) {
+                //something went _really_ wrong.. not gonna happend(tm)
+                acpid_log(LOG_ERR, "open(): %s", strerror(errno));
+                free(file);
+                unlock_rules();
+                return -1;
+        }
+        /* fd is closed elsewhere.. */
+		r = parse_file(fd_rule, file);
 		if (r) {
 			enlist_rule(&cmd_list, r);
 			nrules++;
@@ -219,7 +217,7 @@ acpid_cleanup_rules(int do_detach)
 }
 
 static struct rule *
-parse_file(const char *file)
+parse_file(int fd_rule, const char *file)
 {
 	FILE *fp;
 	char buf[512];
@@ -228,7 +226,7 @@ parse_file(const char *file)
 
 	acpid_log(LOG_DEBUG, "parsing conf file %s", file);
 
-	fp = fopen(file, "r");
+	fp = fdopen(fd_rule, "re");
 	if (!fp) {
 		acpid_log(LOG_ERR, "fopen(%s): %s", file, strerror(errno));
 		return NULL;
