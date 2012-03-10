@@ -118,47 +118,56 @@ acpid_read_conf(const char *confdir)
 	while ((dirent = readdir(dir))) {
 		struct rule *r;
 		struct stat stat_buf;
-        char *file = NULL;
+        char *file = NULL;  /* rename: filename */
         int fd_rule;
+
 		/* skip "." and ".." */
 		if (strncmp(dirent->d_name, ".", sizeof(dirent->d_name)) == 0)
 			continue;
 		if (strncmp(dirent->d_name, "..", sizeof(dirent->d_name)) == 0)
 			continue;
 
-        if(asprintf(&file, "%s/%s", confdir, dirent->d_name) < 0) {
+        if (asprintf(&file, "%s/%s", confdir, dirent->d_name) < 0) {
             acpid_log(LOG_ERR, "asprintf: %s", strerror(errno));
             unlock_rules();
             return -1;
         }
+
 		/* skip any files that don't match the run-parts convention */
 		if (regexec(&preg, dirent->d_name, 0, NULL, 0) != 0) {
-            free(file);
 			acpid_log(LOG_INFO, "skipping conf file %s", file);
+            free(file);
 			continue;
 		}
-        if(dirent->d_type != DT_REG) { /* may be DT_UNKNOWN ...*/
-		/* allow only regular files and symlinks to files */
-		    if (fstatat(dirfd(dir), dirent->d_name, &stat_buf, 0) != 0) {
+
+        /* ??? Check for DT_UNKNOWN and do this, then "else if" on not DT_REG
+               and do the same as the !S_ISREG() branch below. */
+        if (dirent->d_type != DT_REG) { /* may be DT_UNKNOWN ...*/
+            /* allow only regular files and symlinks to files */
+            if (fstatat(dirfd(dir), dirent->d_name, &stat_buf, 0) != 0) {
 			    acpid_log(LOG_ERR, "stat(%s): %s", file,
 				    strerror(errno));
-			        free(file);
-			        continue; /* keep trying the rest of the files */
-		       }
-		    if (!S_ISREG(stat_buf.st_mode)) {
-			    acpid_log(LOG_INFO, "skipping non-file %s", file);
 			    free(file);
-			    continue; /* skip non-regular files */
+			    continue; /* keep trying the rest of the files */
 		    }
+		    if (!S_ISREG(stat_buf.st_mode)) {
+                acpid_log(LOG_INFO, "skipping non-file %s", file);
+                free(file);
+                continue; /* skip non-regular files */
+            }
         }
-        if((fd_rule = openat(dirfd(dir), dirent->d_name, O_RDONLY|O_CLOEXEC|O_NONBLOCK)) == -1) {
-                //something went _really_ wrong.. not gonna happend(tm)
+
+        /* open the rule file (might want to move this into parse_file()?) */
+		if ((fd_rule = openat(dirfd(dir), dirent->d_name, 
+                              O_RDONLY|O_CLOEXEC|O_NONBLOCK)) == -1) {
+                /* something went _really_ wrong.. Not Gonna Happen(tm) */
                 acpid_log(LOG_ERR, "open(): %s", strerror(errno));
                 free(file);
+                /* ??? Too extreme?  Why not just continue? */
                 unlock_rules();
                 return -1;
         }
-        /* fd is closed elsewhere.. */
+        /* fd is closed by parse_file() */
 		r = parse_file(fd_rule, file);
 		if (r) {
 			enlist_rule(&cmd_list, r);
@@ -226,6 +235,7 @@ parse_file(int fd_rule, const char *file)
 
 	acpid_log(LOG_DEBUG, "parsing conf file %s", file);
 
+    /* r - read-only, e - O_CLOEXEC */
 	fp = fdopen(fd_rule, "re");
 	if (!fp) {
 		acpid_log(LOG_ERR, "fopen(%s): %s", file, strerror(errno));
