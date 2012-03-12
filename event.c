@@ -129,6 +129,7 @@ acpid_read_conf(const char *confdir)
 
         if (asprintf(&file, "%s/%s", confdir, dirent->d_name) < 0) {
             acpid_log(LOG_ERR, "asprintf: %s", strerror(errno));
+            closedir(dir);
             unlock_rules();
             return -1;
         }
@@ -145,8 +146,7 @@ acpid_read_conf(const char *confdir)
         if (dirent->d_type != DT_REG) { /* may be DT_UNKNOWN ...*/
             /* allow only regular files and symlinks to files */
             if (fstatat(dirfd(dir), dirent->d_name, &stat_buf, 0) != 0) {
-			    acpid_log(LOG_ERR, "stat(%s): %s", file,
-				    strerror(errno));
+			    acpid_log(LOG_ERR, "fstatat(%s): %s", file, strerror(errno));
 			    free(file);
 			    continue; /* keep trying the rest of the files */
 		    }
@@ -161,9 +161,10 @@ acpid_read_conf(const char *confdir)
 		if ((fd_rule = openat(dirfd(dir), dirent->d_name, 
                               O_RDONLY|O_CLOEXEC|O_NONBLOCK)) == -1) {
                 /* something went _really_ wrong.. Not Gonna Happen(tm) */
-                acpid_log(LOG_ERR, "open(): %s", strerror(errno));
+                acpid_log(LOG_ERR, "openat(%s): %s", file, strerror(errno));
                 free(file);
                 /* ??? Too extreme?  Why not just continue? */
+                closedir(dir);
                 unlock_rules();
                 return -1;
         }
@@ -175,11 +176,11 @@ acpid_read_conf(const char *confdir)
 		}
 		free(file);
 	}
+
 	closedir(dir);
 	unlock_rules();
 
-	acpid_log(LOG_INFO, "%d rule%s loaded",
-	    nrules, (nrules == 1)?"":"s");
+	acpid_log(LOG_INFO, "%d rule%s loaded", nrules, (nrules == 1)?"":"s");
 
 	return 0;
 }
