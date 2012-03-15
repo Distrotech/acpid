@@ -44,7 +44,7 @@
     proc.c ud_socket.c) (Cristian Rodriguez)
   - Use safer, faster, and more modern functions asprintf(), fstatat(), 
     openat(), and fdopen() in the configuration file processing.
-    (event.c) (Cristian Rodruguez)
+    (event.c) (Cristian Rodriguez)
 
 * Thu Dec 15 2011  Ted Felix <http://www.tedfelix.com>
   - 2.0.14 release
