@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.60])
-AC_INIT([acpid], [2.0.15])
+AC_INIT([acpid], [2.0.16])
 AC_CONFIG_SRCDIR([connection_list.h])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -30,11 +30,17 @@ AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 
 # Checks for library functions.
-AC_FUNC_CHOWN
 AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_STRNLEN
+AC_CHECK_FUNC(fchown, AC_DEFINE(HAVE_FCHOWN, 1, "Define if fchown() exists"), AC_MSG_ERROR(["fchown() not found"]))
+AC_CHECK_FUNC(fchmod, AC_DEFINE(HAVE_FCHMOD, 1, "Define if fchmod() exists"), AC_MSG_ERROR(["fchmod() not found"]))
+AC_CHECK_FUNC(fstat, AC_DEFINE(HAVE_FSTAT, 1, "Define if fstat() exists"), AC_MSG_ERROR(["fstat() not found"]))
+AC_CHECK_FUNC(fstatat, AC_DEFINE(HAVE_FSTATAT, 1, "Define if fstatat() exists"), AC_MSG_ERROR(["fstatat() not found"]))
+AC_CHECK_FUNC(openat, AC_DEFINE(HAVE_OPENAT, 1, "Define if openat() exists"), AC_MSG_ERROR(["openat() not found"]))
+AC_CHECK_FUNC(asprintf, AC_DEFINE(HAVE_ASPRINTF, 1, "Define if asprintf() exists"), AC_MSG_ERROR(["asprintf() not found"]))
+# These are actually required.  Should switch to above form.
 AC_CHECK_FUNCS([alarm dup2 memset regcomp select socket strcasecmp strdup strerror strrchr strtol])
 
 # removed for now as kacpimon was not included in dist target
