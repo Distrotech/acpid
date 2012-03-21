@@ -56,10 +56,6 @@ struct evtab_entry {
    evtest.c, acpi_genl, or kacpimon to find new events to add to this
    table. */
 
-#ifndef SW_LINEIN_INSERT
-#define SW_LINEIN_INSERT 0x0d
-#endif
-
 static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_KEY, KEY_POWER, 1}, "button/power PBTN 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_SUSPEND, 1}, 
@@ -142,8 +138,11 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_KEY, KEY_BRIGHTNESS_ZERO, 1}, 
  		"video/brightnesszero BZRO 00000088 00000000"},
 	{{{0,0}, EV_KEY, KEY_DISPLAY_OFF, 1}, 
- 		"video/displayoff DOFF 00000089 00000000"},
 #ifdef SW_HEADPHONE_INSERT
+#ifndef SW_LINEIN_INSERT
+#define SW_LINEIN_INSERT 0x0d
+#endif
+		"video/displayoff DOFF 00000089 00000000"},
 	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 0},
 		"jack/headphone HEADPHONE unplug"},
 	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 1},
@@ -164,9 +163,8 @@ static struct evtab_entry evtab[] = {
 		"jack/linein LINEIN unplug"},
 	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 1},
 		"jack/linein LINEIN plug"}
-#endif
 #else
-		"jack/videoout VIDEOOUT plug"}
+		"video/displayoff DOFF 00000089 00000000"}
 #warning You have old kernel headers. Some features will be disabled. Please upgrade to Linux-3.2 or newer.
 #endif
 };
