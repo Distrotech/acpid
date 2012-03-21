@@ -8,7 +8,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-int ud_create_socket(const char *name);
+int ud_create_socket(const char *name, mode_t socketmode);
 int ud_accept(int sock, struct ucred *cred);
 int ud_connect(const char *name);
 int ud_get_peercred(int fd, struct ucred *cred);

@@ -111,18 +111,11 @@ open_sock()
 		/* ??? Move CLOEXEC and NONBLOCK settings below up to here? */
 	} else {
 		/* create our own socket */
-		fd = ud_create_socket(socketfile);
+		fd = ud_create_socket(socketfile, socketmode);
 		if (fd < 0) {
 			acpid_log(LOG_ERR, "can't open socket %s: %s",
 				socketfile, strerror(errno));
 			exit(EXIT_FAILURE);
-		}
-
-		if (fchmod(fd, socketmode) < 0) {
-			close(fd);
-			acpid_log(LOG_ERR, "chmod() on socket %s: %s", 
-		        socketfile, strerror(errno));
-			return;
 		}
 
 		/* if we need to change the socket's group, do so */
@@ -140,7 +133,11 @@ open_sock()
 		            socketfile, strerror(errno));
 				exit(EXIT_FAILURE);
 			}
-			if (fchown(fd, buf.st_uid, gr->gr_gid) < 0) {
+			/* ??? I've tried using fchown(), however it doesn't work here.
+			 *     It also doesn't work before bind().  The GNU docs seem to
+			 *     indicate it isn't supposed to work with sockets. */
+			/* if (fchown(fd, buf.st_uid, gr->gr_gid) < 0) { */
+			if (chown(socketfile, buf.st_uid, gr->gr_gid) < 0) {
 				acpid_log(LOG_ERR, "can't chown %s: %s", 
 		            socketfile, strerror(errno));
 				exit(EXIT_FAILURE);

@@ -23,7 +23,7 @@
 #include "ud_socket.h"
 
 int
-ud_create_socket(const char *name)
+ud_create_socket(const char *name, mode_t socketmode)
 {
 	int fd;
 	int r;
@@ -44,6 +44,16 @@ ud_create_socket(const char *name)
 	fd = socket(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC | SOCK_NONBLOCK, 0);
 	if (fd < 0) {
 		return fd;
+	}
+
+	/* Clear the umask to guarantee predictable results from fchmod(). */
+	umask(0);
+
+	if (fchmod(fd, socketmode) < 0) {
+		close(fd);
+		acpid_log(LOG_ERR, "fchmod() on socket %s: %s",
+	        name, strerror(errno));
+		return -1;
 	}
 
 	/* setup address struct */
