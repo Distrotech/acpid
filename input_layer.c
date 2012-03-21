@@ -137,7 +137,36 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_KEY, KEY_BRIGHTNESS_ZERO, 1}, 
  		"video/brightnesszero BZRO 00000088 00000000"},
 	{{{0,0}, EV_KEY, KEY_DISPLAY_OFF, 1}, 
- 		"video/displayoff DOFF 00000089 00000000"}
+ 		"video/displayoff DOFF 00000089 00000000"},
+#ifdef SW_HEADPHONE_INSERT
+	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 0},
+		"jack/headphone HEADPHONE unplug"},
+	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 1},
+		"jack/headphone HEADPHONE plug"},
+	{{{0,0}, EV_SW, SW_MICROPHONE_INSERT, 0},
+		"jack/microphone MICROPHONE unplug"},
+	{{{0,0}, EV_SW, SW_MICROPHONE_INSERT, 1},
+		"jack/microphone MICROPHONE plug"},
+	{{{0,0}, EV_SW, SW_LINEOUT_INSERT, 0},
+		"jack/lineout LINEOUT unplug"},
+	{{{0,0}, EV_SW, SW_LINEOUT_INSERT, 1},
+		"jack/lineout LINEOUT plug"},
+	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 0},
+		"jack/videoout VIDEOOUT unplug"},
+	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 1},
+#ifdef SW_LINEIN_INSERT
+		"jack/videoout VIDEOOUT plug"},
+	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 0},
+		"jack/linein LINEIN unplug"},
+	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 1},
+		"jack/linein LINEIN plug"}
+#else
+		"jack/videoout VIDEOOUT plug"}
+#endif
+#else
+		"jack/videoout VIDEOOUT plug"}
+#warning You have old kernel headers. Some features will be disabled. Please upgrade to Linux-3.2 or newer.
+#endif
 };
 
 /*----------------------------------------------------------------------*/
