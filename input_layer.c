@@ -139,6 +139,9 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_KEY, KEY_DISPLAY_OFF, 1}, 
  		"video/displayoff DOFF 00000089 00000000"},
 #ifdef SW_HEADPHONE_INSERT
+#ifndef SW_LINEIN_INSERT
+#define SW_LINEIN_INSERT 0x0d
+#endif
 	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 0},
 		"jack/headphone HEADPHONE unplug"},
 	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 1},
@@ -154,14 +157,11 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 0},
 		"jack/videoout VIDEOOUT unplug"},
 	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 1},
-#ifdef SW_LINEIN_INSERT
 		"jack/videoout VIDEOOUT plug"},
 	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 0},
 		"jack/linein LINEIN unplug"},
 	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 1},
 		"jack/linein LINEIN plug"}
-#else
-		"jack/videoout VIDEOOUT plug"}
 #endif
 #else
 		"jack/videoout VIDEOOUT plug"}
