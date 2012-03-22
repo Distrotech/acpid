@@ -104,6 +104,35 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_MSC, 4, 18}, "button/fnpgdown FNPGDOWN 00000080 00000000"},
 #endif
 
+/* This test probably belongs in configure.ac. */
+#ifdef SW_HEADPHONE_INSERT
+ #ifndef SW_LINEIN_INSERT
+  #define SW_LINEIN_INSERT 0x0d
+ #endif
+	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 0},
+		"jack/headphone HEADPHONE unplug"},
+	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 1},
+		"jack/headphone HEADPHONE plug"},
+	{{{0,0}, EV_SW, SW_MICROPHONE_INSERT, 0},
+		"jack/microphone MICROPHONE unplug"},
+	{{{0,0}, EV_SW, SW_MICROPHONE_INSERT, 1},
+		"jack/microphone MICROPHONE plug"},
+	{{{0,0}, EV_SW, SW_LINEOUT_INSERT, 0},
+		"jack/lineout LINEOUT unplug"},
+	{{{0,0}, EV_SW, SW_LINEOUT_INSERT, 1},
+		"jack/lineout LINEOUT plug"},
+	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 0},
+		"jack/videoout VIDEOOUT unplug"},
+	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 1},
+		"jack/videoout VIDEOOUT plug"},
+	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 0},
+		"jack/linein LINEIN unplug"},
+	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 1},
+		"jack/linein LINEIN plug"},
+#else
+ #warning SW_HEADPHONE_INSERT not found in input_layer.h. Support for plug/unplug events will be disabled. Please upgrade your kernel headers to Linux-3.2 or newer.
+#endif
+
 	{{{0,0}, EV_KEY, KEY_ZOOM, 1}, "button/zoom ZOOM 00000080 00000000"},
 	/* typical events file has "video.* 00000087" */
 	{{{0,0}, EV_KEY, KEY_BRIGHTNESSDOWN, 1}, 
@@ -138,35 +167,7 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_KEY, KEY_BRIGHTNESS_ZERO, 1}, 
  		"video/brightnesszero BZRO 00000088 00000000"},
 	{{{0,0}, EV_KEY, KEY_DISPLAY_OFF, 1}, 
-#ifdef SW_HEADPHONE_INSERT
-#ifndef SW_LINEIN_INSERT
-#define SW_LINEIN_INSERT 0x0d
-#endif
-		"video/displayoff DOFF 00000089 00000000"},
-	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 0},
-		"jack/headphone HEADPHONE unplug"},
-	{{{0,0}, EV_SW, SW_HEADPHONE_INSERT, 1},
-		"jack/headphone HEADPHONE plug"},
-	{{{0,0}, EV_SW, SW_MICROPHONE_INSERT, 0},
-		"jack/microphone MICROPHONE unplug"},
-	{{{0,0}, EV_SW, SW_MICROPHONE_INSERT, 1},
-		"jack/microphone MICROPHONE plug"},
-	{{{0,0}, EV_SW, SW_LINEOUT_INSERT, 0},
-		"jack/lineout LINEOUT unplug"},
-	{{{0,0}, EV_SW, SW_LINEOUT_INSERT, 1},
-		"jack/lineout LINEOUT plug"},
-	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 0},
-		"jack/videoout VIDEOOUT unplug"},
-	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 1},
-		"jack/videoout VIDEOOUT plug"},
-	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 0},
-		"jack/linein LINEIN unplug"},
-	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 1},
-		"jack/linein LINEIN plug"}
-#else
-		"video/displayoff DOFF 00000089 00000000"}
-#warning You have old kernel headers. Some features will be disabled. Please upgrade to Linux-3.2 or newer.
-#endif
+			"video/displayoff DOFF 00000089 00000000"}
 };
 
 /*----------------------------------------------------------------------*/
@@ -178,7 +179,9 @@ event_string(struct input_event event)
 	unsigned i;
 	
 	/* for each entry in the event table */
-	/* ??? is there a faster way? */
+	/* ??? Is there a faster way?  This is triggered every time the user
+	 *     presses a key.  Maybe a simple hash algorithm?  Or a simple check
+	 *     for very common keys (alphanumeric) and bail before this?  */
 	for (i = 0; i < DIM(evtab); ++i)
 	{
 		/* if this is a matching event, return its string */
