@@ -46,6 +46,15 @@ http://www.tedfelix.com  ( ted -at- tedfelix -dot- com )
 You can also fork the git repo on sourceforge and submit changes that way:
 http://sourceforge.net/u/tedfelix/acpid2/
 
+DIST NOTES
+
+To create the tarball for distribution:
+
+  $ make distclean
+  $ autoreconf --install --force
+  $ ./configure
+  $ make dist
+
 --------------------------------------------------------------------
 OLD README
 

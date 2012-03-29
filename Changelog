@@ -1,3 +1,17 @@
+* Thu Mar 29 2012  Ted Felix <http://www.tedfelix.com>
+  - 2.0.16 release
+    (configure.ac)  (Ted Felix)
+  - Add tests for required functions to configure.ac.
+    (configure.ac)  (Ted Felix)
+  - Move fchmod() before bind() on socket.  Debian bug #664705.
+    (sock.c ud_socket.c ud_socket.h)  (Ted Felix)
+  - Switch back to chown() as fchown() doesn't appear to work with sockets.
+    (sock.c)  (Ted Felix) 
+  - Add support for headphone (and other) jack switch events.
+    (input_layer.c)  (AlexanderR)
+  - Add notes on making the tarball.
+    (README)  (Ted Felix)
+
 * Thu Mar 15 2012  Ted Felix <http://www.tedfelix.com>
   - 2.0.15 release
     (configure.ac)  (Ted Felix)
