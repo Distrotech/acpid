@@ -62,6 +62,9 @@ static struct evtab_entry evtab[] = {
  		"button/suspend SUSP 00000080 00000000"},
 	{{{0,0}, EV_SW, SW_LID, 1}, "button/lid LID close"},
 	{{{0,0}, EV_SW, SW_LID, 0}, "button/lid LID open"},
+	{{{0,0}, EV_SW, SW_TABLET_MODE, 0}, "video/tabletmode TBLT off"},
+	{{{0,0}, EV_SW, SW_TABLET_MODE, 1}, "video/tabletmode TBLT on"},
+
 	/* blue access IBM button on Thinkpad T42p*/
 	{{{0,0}, EV_KEY, KEY_PROG1, 1}, "button/prog1 PROG1 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_VENDOR, 1}, "button/vendor VNDR 00000080 00000000"},
@@ -140,6 +143,7 @@ static struct evtab_entry evtab[] = {
  	/* typical events file has "video.* 00000086" */
 	{{{0,0}, EV_KEY, KEY_BRIGHTNESSUP, 1}, 
  		"video/brightnessup BRTUP 00000086 00000000"},
+
 	{{{0,0}, EV_KEY, KEY_KBDILLUMTOGGLE, 1}, 
  		"button/kbdillumtoggle KBILLUM 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_VOLUMEDOWN, 1}, 
