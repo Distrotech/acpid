@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.60])
-AC_INIT([acpid], [2.0.16])
+AC_INIT([acpid], [2.0.17])
 AC_CONFIG_SRCDIR([connection_list.h])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -35,7 +35,7 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_STRNLEN
 AC_CHECK_FUNC(fchown, AC_DEFINE(HAVE_FCHOWN, 1, "Define if fchown() exists"), AC_MSG_ERROR(["fchown() not found"]))
-AC_CHECK_FUNC(fchmod, AC_DEFINE(HAVE_FCHMOD, 1, "Define if fchmod() exists"), AC_MSG_ERROR(["fchmod() not found"]))
+AC_CHECK_FUNC(chmod, AC_DEFINE(HAVE_CHMOD, 1, "Define if chmod() exists"), AC_MSG_ERROR(["chmod() not found"]))
 AC_CHECK_FUNC(fstat, AC_DEFINE(HAVE_FSTAT, 1, "Define if fstat() exists"), AC_MSG_ERROR(["fstat() not found"]))
 AC_CHECK_FUNC(fstatat, AC_DEFINE(HAVE_FSTATAT, 1, "Define if fstatat() exists"), AC_MSG_ERROR(["fstatat() not found"]))
 AC_CHECK_FUNC(openat, AC_DEFINE(HAVE_OPENAT, 1, "Define if openat() exists"), AC_MSG_ERROR(["openat() not found"]))
