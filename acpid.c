@@ -403,14 +403,17 @@ std2null(void)
 	if (!is_socket(STDIN_FILENO)  && 
 			dup2(nullfd, STDIN_FILENO) != STDIN_FILENO) {
 		acpid_log(LOG_ERR, "dup2() stdin: %s", strerror(errno));
+		close(nullfd);
 		return -1;
 	}
 	if (!acpid_debug && dup2(nullfd, STDOUT_FILENO) != STDOUT_FILENO) {
 		acpid_log(LOG_ERR, "dup2() stdout: %s", strerror(errno));
+		close(nullfd);
 		return -1;
 	}
 	if (!acpid_debug && dup2(nullfd, STDERR_FILENO) != STDERR_FILENO) {
 		acpid_log(LOG_ERR, "dup2() stderr: %s", strerror(errno));
+		close(nullfd);
 		return -1;
 	}
 

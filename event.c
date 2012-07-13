@@ -109,6 +109,7 @@ acpid_read_conf(const char *confdir)
 	/* Compile the regular expression.  This is based on run-parts(8). */
 	rc = regcomp(&preg, "^[a-zA-Z0-9_-]+$", RULE_REGEX_FLAGS);
 	if (rc) {
+		closedir(dir);
 		acpid_log(LOG_ERR, "regcomp(): %d", rc);
 		unlock_rules();
 		return -1;

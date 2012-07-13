@@ -64,12 +64,14 @@ ud_create_socket(const char *name, mode_t socketmode)
 	/* bind it to the socket */
 	r = bind(fd, (struct sockaddr *)&uds_addr, sizeof(uds_addr));
 	if (r < 0) {
+		close (fd);
 		return r;
 	}
 
 	/* listen - allow 10 to queue */
 	r = listen(fd, 10);
 	if (r < 0) {
+		close(fd);
 		return r;
 	}
 
