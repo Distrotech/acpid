@@ -5,6 +5,8 @@
     (configure.ac)  (Ted Felix)
   - Add support for tablet mode switch.  
     (input_layer.c)  (Fabian Henze)
+  - Incorrect sizeof() usage for memset.  (libnetlink.c) (Auke Kok)
+  - Close some unclosed fd's.  (acpid.c event.c ud_socket.c)  (Auke Kok)
 
 * Thu Mar 29 2012  Ted Felix <http://www.tedfelix.com>
   - 2.0.16 release
