@@ -48,12 +48,24 @@ http://sourceforge.net/u/tedfelix/acpid2/
 
 DIST NOTES
 
+Before making the tarball:
+
+  1. Check the version number in configure.ac and the Changelog.
+  2. Update the Changelog.
+  3. Check in all changes and create a tag for the version.
+  4. Push to sf.
+
 To create the tarball for distribution:
 
   $ make distclean
   $ autoreconf --install --force
   $ ./configure
   $ make dist
+  
+Once complete:
+
+  1. Update the version number in configure.ac.
+  2. Update the Changelog for the next version. 
 
 --------------------------------------------------------------------
 OLD README

@@ -1,3 +1,11 @@
+* ???  Ted Felix <http://www.tedfelix.com>
+  - 2.0.17 release
+    (configure.ac)  (Ted Felix)
+  - Check for chmod.
+    (configure.ac)  (Ted Felix)
+  - Add support for tablet mode switch.  
+    (input_layer.c)  (Fabian Henze)
+
 * Thu Mar 29 2012  Ted Felix <http://www.tedfelix.com>
   - 2.0.16 release
     (configure.ac)  (Ted Felix)
