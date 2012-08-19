@@ -132,7 +132,7 @@ main(int argc, char **argv)
 	}
 
 	/* create our pidfile */
-	if (create_pidfile() < 0) {
+	if (!foreground && create_pidfile() < 0) {
 		exit(EXIT_FAILURE);
 	}
 
