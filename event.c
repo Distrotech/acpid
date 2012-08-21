@@ -130,6 +130,7 @@ acpid_read_conf(const char *confdir)
 
         if (asprintf(&file, "%s/%s", confdir, dirent->d_name) < 0) {
             acpid_log(LOG_ERR, "asprintf: %s", strerror(errno));
+            regfree(&preg);
             closedir(dir);
             unlock_rules();
             return -1;
@@ -166,6 +167,7 @@ acpid_read_conf(const char *confdir)
                 free(file);
                 /* ??? Too extreme?  Why not just continue? */
                 closedir(dir);
+                regfree(&preg);
                 unlock_rules();
                 return -1;
         }
@@ -178,6 +180,7 @@ acpid_read_conf(const char *confdir)
 		free(file);
 	}
 
+    regfree(&preg);
 	closedir(dir);
 	unlock_rules();
 
