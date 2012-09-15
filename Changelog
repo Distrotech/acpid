@@ -1,12 +1,18 @@
-* ???  Ted Felix <http://www.tedfelix.com>
+* Sat Sep 15 2012  Ted Felix <http://www.tedfelix.com>
   - 2.0.17 release
     (configure.ac)  (Ted Felix)
   - Check for chmod.
     (configure.ac)  (Ted Felix)
   - Add support for tablet mode switch.  
     (input_layer.c)  (Fabian Henze)
-  - Incorrect sizeof() usage for memset.  (libnetlink.c) (Auke Kok)
-  - Close some unclosed fd's.  (acpid.c event.c ud_socket.c)  (Auke Kok)
+  - Incorrect sizeof() usage for memset.  
+    (libnetlink.c)  (Auke Kok)
+  - Close some unclosed fd's.  
+    (acpid.c event.c ud_socket.c)  (Auke Kok)
+  - Do not create pid file when running in foreground.  
+    (acpid.c)  (Cristian Rodriguez)
+  - Free regular expression.  
+    (event.c)  (Cristian Rodriguez)
 
 * Thu Mar 29 2012  Ted Felix <http://www.tedfelix.com>
   - 2.0.16 release
