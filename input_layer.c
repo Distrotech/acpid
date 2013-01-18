@@ -56,6 +56,14 @@ struct evtab_entry {
    evtest.c, acpi_genl, or kacpimon to find new events to add to this
    table. */
 
+/*
+ * The two numbers (e.g. "00000080 00000000") in each string is a format
+ * that Xorg and maybe others expect.
+ *
+ * See hw/xfree86/os-support/linux/lnx_acpi.c in xserver and specifically
+ * lnxACPIGetEventFromOs().
+ */
+
 static struct evtab_entry evtab[] = {
 
 	/*** COMMON EVENTS ***/
@@ -66,8 +74,8 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_KEY, KEY_SLEEP, 1}, "button/sleep SBTN 00000080 00000000"},
 	{{{0,0}, EV_SW, SW_LID, 1}, "button/lid LID close"},
 	{{{0,0}, EV_SW, SW_LID, 0}, "button/lid LID open"},
-	{{{0,0}, EV_SW, SW_TABLET_MODE, 0}, "video/tabletmode TBLT off"},
-	{{{0,0}, EV_SW, SW_TABLET_MODE, 1}, "video/tabletmode TBLT on"},
+	{{{0,0}, EV_SW, SW_TABLET_MODE, 0}, "video/tabletmode TBLT 0000008A 00000000"},
+	{{{0,0}, EV_SW, SW_TABLET_MODE, 1}, "video/tabletmode TBLT 0000008A 00000001"},
 
 
 	/*** VIDEO ***/
