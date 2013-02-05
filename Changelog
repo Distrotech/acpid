@@ -1,6 +1,13 @@
-* ???  Ted Felix <http://www.tedfelix.com>
+* Fri Feb 15 2013  Ted Felix <http://www.tedfelix.com>
   - 2.0.18 release
     (configure.ac)  (Ted Felix)
+  - README improvements  (README)  (Ted Felix)
+  - Fix format of video/tabletmode event string.  CRITICAL.
+    (input_layer.c)  (Ted Felix)
+  - Add how to kill acpid to kacpimon man page.
+    (kacpimon.8)  (Ted Felix)
+  - Add info on logind.conf's HandlePowerKey to man page.
+    (acpid.8)  (Ted Felix)
 
 * Sat Sep 15 2012  Ted Felix <http://www.tedfelix.com>
   - 2.0.17 release

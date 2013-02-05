@@ -64,6 +64,13 @@ will log all of its activities, as well as the stdout and stderr of any
 actions, to syslog.
 .PP
 All the default files and directories can be changed with commandline options.
+.PP
+When troubleshooting \fBacpid\fP, it is important to be aware that other parts 
+of a system might be handling ACPI events.
+\fBsystemd\fP(1) is capable of handling the power switch and various other
+events that are commonly handled by \fBacpid\fP.  See the description of 
+HandlePowerKey in \fBlogind.conf\fP(5) for more.  Some window managers also 
+take over \fBacpid\fP's normal handling of the power button and other events.
 .SH OPTIONS
 .TP 12
 .BI \-c "\fR, \fP" \-\-confdir " directory"
