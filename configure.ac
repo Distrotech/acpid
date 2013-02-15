@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.60])
-AC_INIT([acpid], [2.0.18])
+AC_INIT([acpid], [2.0.19])
 AC_CONFIG_SRCDIR([connection_list.h])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
