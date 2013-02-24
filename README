@@ -4,7 +4,7 @@ acpid for netlink
 This branch of the acpid project includes support for netlink and the input 
 layer.  The latest version can be found here:
 
-  http://tedfelix.com/linux/acpid-netlink.html
+  http://sourceforge.net/projects/acpid2/
 
 Previous (1.x) versions of acpid relied on /proc/acpi/event which is a 
 deprecated kernel interface for ACPI events.  Newer kernels use netlink and 
@@ -72,13 +72,13 @@ Upload to sf:
 
   http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
 
-  $ rsync acpid-2.0.18.tar.xz tedfelix@frs.sourceforge.net:/home/frs/project/acpid2
+  $ rsync -t acpid-2.0.18.tar.xz tedfelix@frs.sourceforge.net:/home/frs/project/acpid2
 
   or via sftp...
 
   $ sftp tedfelix@frs.sourceforge.net
   sftp> cd /home/frs/project/acpid2
-  sftp> put acpid-2.0.18.tar.xz
+  sftp> put -p acpid-2.0.18.tar.xz
 
 Once complete:
 
