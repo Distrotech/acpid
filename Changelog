@@ -1,7 +1,11 @@
-* ???  Ted Felix <http://www.tedfelix.com>
+* ???  Ted Felix <ted -at- tedfelix -dot- com>
   - 2.0.19 release
     (configure.ac)  (Ted Felix)
   - README improvements  (README)  (Ted Felix)
+  - Sync kacpimon's libnetlink.c with acpid's.
+    (libnetlink.c)  (Ted Felix)
+  - Add support for mic mute (KEY_MICMUTE).
+    (input_layer.c)  (Ted Felix)
 
 * Fri Feb 15 2013  Ted Felix <http://www.tedfelix.com>
   - 2.0.18 release

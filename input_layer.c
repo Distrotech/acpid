@@ -112,6 +112,8 @@ static struct evtab_entry evtab[] = {
  		"button/volumeup VOLUP 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_MUTE, 1},
  		"button/mute MUTE 00000080 00000000"},
+	{{{0,0}, EV_KEY, KEY_MICMUTE, 1},
+		"button/micmute MICMUTE 00000080 00000000"},
  	/* cd play/pause buttons */
  	{{{0,0}, EV_KEY, KEY_NEXTSONG, 1},
  		"cd/next CDNEXT 00000080 00000000"},
