@@ -1,9 +1,10 @@
-* ???  Ted Felix <ted -at- tedfelix -dot- com>
+* Tue May 28 2013  Ted Felix <ted -at- tedfelix -dot- com>
   - 2.0.19 release
     (configure.ac)  (Ted Felix)
   - README improvements  (README)  (Ted Felix)
+  - man page additions  (acpid.8)  (Ted Felix)
   - Sync kacpimon's libnetlink.c with acpid's.
-    (libnetlink.c)  (Ted Felix)
+    (kacpimon/libnetlink.c)  (Ted Felix)
   - Add support for mic mute (KEY_MICMUTE).
     (input_layer.c)  (Ted Felix)
 
