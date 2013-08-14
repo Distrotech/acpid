@@ -23,7 +23,7 @@ completely.  For example, with upstart, the proper incantation is usually:
 
 acpid version 2.0.15 introduced autoconf.  To build versions >= 2.0.15:
 
-  $ ./configure
+  $ ./configure --prefix=/usr
   $ make
   $ sudo make install
 
