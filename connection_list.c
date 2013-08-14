@@ -35,7 +35,7 @@
 /*---------------------------------------------------------------*/
 /* private objects */
 
-#define MAX_CONNECTIONS 20
+#define MAX_CONNECTIONS 100
 
 static struct connection connection_list[MAX_CONNECTIONS];
 
