@@ -80,6 +80,13 @@ Upload to sf:
   sftp> cd /home/frs/project/acpid2
   sftp> put -p acpid-2.0.18.tar.xz
 
+Set this latest upload as the latest:
+
+  1. Login to sf.
+  2. Click on the "i" icon on the right in the file list.
+  3. Default download for: "Select all"
+  4. Save
+
 Once complete:
 
   1. Update the version number in configure.ac.
