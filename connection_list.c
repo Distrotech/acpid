@@ -35,7 +35,7 @@
 /*---------------------------------------------------------------*/
 /* private objects */
 
-#define MAX_CONNECTIONS 100
+static int capacity = 0;
 
 static struct connection *connection_list = NULL;
 
@@ -56,11 +56,19 @@ add_connection(struct connection *p)
 {
 	if (nconnections < 0)
 		return -1;
-	if (!connection_list)
-		connection_list = malloc(sizeof(struct connection) * MAX_CONNECTIONS);
-	if (nconnections >= MAX_CONNECTIONS) {
-		acpid_log(LOG_ERR, "Too many connections.");
-		return -1;
+
+	/* if the list is full, allocate more space */
+	if (nconnections >= capacity) {
+		/* no more than 1024 */
+		if (capacity > 1024) {
+			acpid_log(LOG_ERR, "Too many connections.");
+			return -1;
+		}
+
+		/* another 20 */
+		capacity += 20;
+		connection_list =
+			realloc(connection_list, sizeof(struct connection) * capacity);
 	}
 
 	if (nconnections == 0)
