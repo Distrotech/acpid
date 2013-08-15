@@ -82,7 +82,9 @@ delete_connection(int fd)
 {
 	int i;
 
-	close(fd);
+	/* close anything other than stdin/stdout/stderr */
+	if (fd > 2)
+		close(fd);
 
 	/* remove from the fd set */
 	FD_CLR(fd, &allfds);
@@ -105,6 +107,18 @@ delete_connection(int fd)
 	/* recalculate highestfd */
 	for (i = 0; i < nconnections; ++i) {
 		highestfd = max(highestfd, connection_list[i].fd);
+	}
+}
+
+/*---------------------------------------------------------------*/
+
+void
+delete_all_connections(void)
+{
+	/* while there are still connections to delete */
+	while (nconnections) {
+		/* delete the connection at the end of the list */
+		delete_connection(connection_list[nconnections-1].fd);
 	}
 }
 

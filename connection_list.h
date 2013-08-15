@@ -75,4 +75,7 @@ extern const fd_set *get_fdset(void);
 /* get the highest fd that was added to the list */
 extern int get_highestfd(void);
 
+/* delete all connections, closing the fds */
+extern void delete_all_connections(void);
+
 #endif /* CONNECTION_LIST_H__ */

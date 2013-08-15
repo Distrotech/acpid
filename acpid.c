@@ -456,6 +456,7 @@ void
 clean_exit_with_status(int status)
 {
 	acpid_cleanup_rules(1);
+	delete_all_connections();
 	acpid_log(LOG_NOTICE, "exiting");
 	unlink(pidfile);
 	exit(status);
