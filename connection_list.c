@@ -51,16 +51,14 @@ static int highestfd = -2;
 /*---------------------------------------------------------------*/
 /* public functions */
 
-void
+int
 add_connection(struct connection *p)
 {
 	if (nconnections < 0)
-		return;
+		return -1;
 	if (nconnections >= MAX_CONNECTIONS) {
 		acpid_log(LOG_ERR, "Too many connections.");
-		/* ??? This routine should return -1 in this situation so that */
-		/*   callers can clean up any open fds and whatnot.  */
-		return;
+		return -1;
 	}
 
 	if (nconnections == 0)
@@ -73,6 +71,8 @@ add_connection(struct connection *p)
 	/* add to the fd set */
 	FD_SET(p->fd, &allfds);
 	highestfd = max(highestfd, p->fd);
+
+	return 0;
 }
 
 /*---------------------------------------------------------------*/

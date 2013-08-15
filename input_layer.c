@@ -411,7 +411,14 @@ int open_inputfile(const char *filename)
 			strcpy(c.pathname, filename);
 		/* assume not a keyboard until we see a scancode */
 		c.kybd = 0;
-		add_connection(&c);
+
+		if (add_connection(&c) < 0) {
+			close(fd);
+			acpid_log(LOG_ERR,
+				"can't add connection for input layer %s (%s)",
+				filename, evname);
+			return -1;
+		}
 
 		return 0;  /* success */
 	}

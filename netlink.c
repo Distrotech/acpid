@@ -233,6 +233,12 @@ void open_netlink(void)
 	c.process = process_netlink;
 	c.pathname = NULL;
 	c.kybd = 0;
-	add_connection(&c);
+
+	if (add_connection(&c) < 0) {
+		rtnl_close(&rth);
+		acpid_log(LOG_ERR,
+			"can't add connection for generic netlink socket");
+		return;
+	}
 }
 

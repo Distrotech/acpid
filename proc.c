@@ -109,7 +109,12 @@ open_proc()
 	c.process = process_proc;
 	c.pathname = NULL;
 	c.kybd = 0;
-	add_connection(&c);
+
+	if (add_connection(&c) < 0) {
+		close(fd);
+		acpid_log(LOG_ERR, "can't add connection for %s", eventfile);
+		return -1;
+	}
 
 	return 0;
 }

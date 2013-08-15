@@ -48,7 +48,7 @@ struct connection
 };
 
 /* add a connection to the list */
-extern void add_connection(struct connection *p);
+extern int add_connection(struct connection *p);
 
 /* delete a connection from the list */
 extern void delete_connection(int fd);

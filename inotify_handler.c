@@ -145,6 +145,11 @@ void open_inotify(void)
 	c.process = process_inotify;
 	c.pathname = NULL;
 	c.kybd = 0;
-	add_connection(&c);
+
+	if (add_connection(&c) < 0) {
+		close(fd);
+		acpid_log(LOG_ERR, "can't add connection for inotify");
+		return;
+	}
 }
 
