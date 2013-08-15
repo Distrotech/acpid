@@ -9,6 +9,7 @@
 .depend
 .deps
 .project
+.settings
 aclocal.m4
 acpid
 acpi_listen
