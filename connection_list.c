@@ -37,7 +37,7 @@
 
 #define MAX_CONNECTIONS 100
 
-static struct connection connection_list[MAX_CONNECTIONS];
+static struct connection *connection_list = NULL;
 
 static int nconnections = 0;
 
@@ -56,6 +56,8 @@ add_connection(struct connection *p)
 {
 	if (nconnections < 0)
 		return -1;
+	if (!connection_list)
+		connection_list = malloc(sizeof(struct connection) * MAX_CONNECTIONS);
 	if (nconnections >= MAX_CONNECTIONS) {
 		acpid_log(LOG_ERR, "Too many connections.");
 		return -1;
@@ -120,6 +122,9 @@ delete_all_connections(void)
 		/* delete the connection at the end of the list */
 		delete_connection(connection_list[nconnections-1].fd);
 	}
+
+	free(connection_list);
+	connection_list = NULL;
 }
 
 /*---------------------------------------------------------------*/
