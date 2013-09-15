@@ -1,6 +1,14 @@
-* ???  Ted Felix <ted -at- tedfelix -dot- com>
+* Sun Sep 15 2013  Ted Felix <ted -at- tedfelix -dot- com>
   - 2.0.20 release
     (configure.ac)  (Ted Felix)
+  - Improve build and release documentation.  
+    (README)  (Ted Felix)
+  - Fix for Debian bug #719659.  Improved handling of systems with
+    large numbers of input layer connections.  Better error handling.
+    (connection_list.h connection_list.c inotify_handler.c input_layer.c 
+    netlink.c proc.c sock.c acpid.c)  (Ted Felix, Ben Winslow)
+  - Update .gitignore for Eclipse.
+    (.gitignore)  (Ted Felix)
 
 * Tue May 28 2013  Ted Felix <ted -at- tedfelix -dot- com>
   - 2.0.19 release
