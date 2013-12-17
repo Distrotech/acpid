@@ -23,6 +23,9 @@
 #ifndef EVENT_H__
 #define EVENT_H__
 
+#define KILL_STR "DIEDIEDIE"
+#define KILL_VAL 1
+
 extern int acpid_read_conf(const char *confdir);
 extern int acpid_add_client(int client, const char *origin);
 extern int acpid_cleanup_rules(int do_detach);

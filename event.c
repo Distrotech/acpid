@@ -84,6 +84,8 @@ static int safe_write(int fd, const char *buf, int len);
 static char *parse_cmd(const char *cmd, const char *event);
 static int check_escapes(const char *str);
 
+extern const char *killstring;
+
 /*
  * read in all the configuration files
  */
@@ -536,7 +538,9 @@ acpid_handle_event(const char *event)
 {
 	struct rule *p;
 	int nrules = 0;
-	struct rule_list *ar[] = { &client_list, &cmd_list, NULL };
+	/* cmd_list must come before client_list so kill rules are
+	 * processed before client rules */
+	struct rule_list *ar[] = { &cmd_list, &client_list, NULL };
 	struct rule_list **lp;
 
 	/* make an event be atomic wrt known signals */
@@ -558,7 +562,13 @@ acpid_handle_event(const char *event)
 				}
 				nrules++;
 				if (p->type == RULE_CMD) {
-					do_cmd_rule(p, event);
+					if (do_cmd_rule(p, event) == KILL_VAL) {
+						/* Abort processing if event matches kill rule */
+						if (logevents) acpid_log(LOG_INFO, "Event must die");
+						while (*++lp);
+						lp--;
+						break;
+					}
 				} else if (p->type == RULE_CLIENT) {
 					do_client_rule(p, event);
 				} else {
@@ -631,14 +641,19 @@ do_cmd_rule(struct rule *rule, const char *event)
 	int status;
 	const char *action;
 
+	/* Moved outside switch to avoid overhead of fork() on
+	 * killed events */
+	/* parse the commandline, doing any substitutions needed */
+	action = parse_cmd(rule->action.cmd, event);
+	/* If it is so decreed, proclaim that the event is to be killed */
+	if (!strcmp(action, killstring)) return(KILL_VAL);
+
 	pid = fork();
 	switch (pid) {
 	case -1:
 		acpid_log(LOG_ERR, "fork(): %s", strerror(errno));
 		return -1;
 	case 0: /* child */
-		/* parse the commandline, doing any substitutions needed */
-		action = parse_cmd(rule->action.cmd, event);
 		if (logevents) {
 			acpid_log(LOG_INFO,
 			    "executing action \"%s\"", action);

@@ -64,6 +64,7 @@ static int nosocket;
 static int foreground;
 static const char *pidfile = ACPID_PIDFILE;
 static int netlink;
+const char *killstring = KILL_STR;
 
 int
 main(int argc, char **argv)
@@ -206,6 +207,7 @@ handle_cmdline(int *argc, char ***argv)
 		{"pidfile", 1, 0, 'p'},
 		{"lockfile", 1, 0, 'L'},
 		{"netlink", 0, 0, 'n'},
+		{"killstring", 1, 0, 'k'},
 		{"version", 0, 0, 'v'},
 		{"help", 0, 0, 'h'},
 		{NULL, 0, 0, 0},
@@ -224,6 +226,7 @@ handle_cmdline(int *argc, char ***argv)
 		"Use the specified PID file.",		/* pidfile */
 		"Use the specified lockfile to stop processing.", /* lockfile */
 		"Force netlink/input layer mode. (overrides -e)", /* netlink */
+		"Define the pseudo-command to drop an event.", /* killstring */
 		"Print version information.",		/* version */
 		"Print this message.",			/* help */
 	};
@@ -234,7 +237,7 @@ handle_cmdline(int *argc, char ***argv)
 	for (;;) {
 		int i;
 		i = getopt_long(*argc, *argv,
-		    "c:C:de:flg:m:s:Sp:L:nvh", opts, NULL);
+		    "c:C:de:flg:m:s:Sp:L:nk:vh", opts, NULL);
 		if (i == -1) {
 			break;
 		}
@@ -279,6 +282,9 @@ handle_cmdline(int *argc, char ***argv)
 			break;
 		case 'n':
 			netlink = 1;
+			break;
+		case 'k':
+			killstring = optarg;
 			break;
 		case 'v':
 			printf(PACKAGE "-" VERSION "\n");
