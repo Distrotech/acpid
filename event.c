@@ -653,20 +653,7 @@ do_cmd_rule(struct rule *rule, const char *event)
 	int status;
 	const char *action;
 
-	/* Moved outside switch to avoid overhead of fork() on
-	 * dropped events */
-	/* ??? There's no need to even call parse_cmd() here.  All
-	 *     we need to do is check rule->action.cmd for dropaction.
-	 *     parse_cmd()'s % expansion is not needed.  Recommend
-	 *     moving the call to parse_cmd() back into the child
-	 *     part of the fork().  Then just use:
-	 *       !strcmp(rule->action.cmd, dropaction)
-	 *     Need to test this to verify it is ok.
-	 */
-	/* parse the commandline, doing any substitutions needed */
-	action = parse_cmd(rule->action.cmd, event);
-	/* If it is so decreed, proclaim that the event is to be dropped */
-	if (!strcmp(action, dropaction))
+	if (!strcmp(rule->action.cmd, dropaction))
 		return DROP_EVENT;
 
 	pid = fork();
@@ -675,6 +662,8 @@ do_cmd_rule(struct rule *rule, const char *event)
 		acpid_log(LOG_ERR, "fork(): %s", strerror(errno));
 		return -1;
 	case 0: /* child */
+		/* parse the commandline, doing any substitutions needed */
+		action = parse_cmd(rule->action.cmd, event);
 		if (logevents) {
 			acpid_log(LOG_INFO,
 			    "executing action \"%s\"", action);
