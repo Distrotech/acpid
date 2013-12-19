@@ -47,7 +47,7 @@ This feature allows multiple rules to be defined for the same event (though no
 ordering is guaranteed), as well as one rule to be defined for multiple events.
 To force \fBacpid\fP to reload the rule configuration, send it a SIGHUP.
 .PP
-The pseudo-action DIEDIEDIE causes the event to be dropped
+The pseudo-action \fI<drop>\fP causes the event to be dropped
 completely and no further processing undertaken; clients connecting
 via the UNIX domain socket (see below) will not be notified of the
 event. This may be useful on some machines, such as certain laptops which
@@ -131,10 +131,10 @@ This option tells \fBacpid\fP to use the specified file as its pidfile.  If
 the file exists, it will be removed and over-written.
 Default is \fI/var/run/acpid.pid\fP.
 .TP
-.BI \-k "\fR, \fP" \-\-killstring " string"
+.BI \-r "\fR, \fP" \-\-dropaction " action"
 This option defines the pseudo-action which tells \fBacpid\fP to abort
 all processing of an event, including client notifications.
-Default is \fIDIEDIEDIE\fP.
+Default is \fI<drop>\fP.
 .TP
 .BI \-v "\fR, \fP" \-\-version
 Print version information and exit.

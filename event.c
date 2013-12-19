@@ -84,7 +84,7 @@ static int safe_write(int fd, const char *buf, int len);
 static char *parse_cmd(const char *cmd, const char *event);
 static int check_escapes(const char *str);
 
-extern const char *killstring;
+extern const char *dropaction;
 
 /*
  * read in all the configuration files
@@ -538,8 +538,17 @@ acpid_handle_event(const char *event)
 {
 	struct rule *p;
 	int nrules = 0;
-	/* cmd_list must come before client_list so kill rules are
+	/* cmd_list must come before client_list so drop rules are
 	 * processed before client rules */
+	/* ??? This is incorrect.  client_list must come before
+	 *     cmd_list to maintain compatible behavior.  As it
+	 *     is there is also a problem with config files that
+	 *     have names that are alphabetically prior to the
+	 *     config file with the <drop> in it.  The solution
+	 *     is to introduce a drop_list which contains only
+	 *     drop actions.  Then change the rule list to:
+	 *       { &drop_list, &client_list, &cmd_list, NULL }
+	 */
 	struct rule_list *ar[] = { &cmd_list, &client_list, NULL };
 	struct rule_list **lp;
 
@@ -562,11 +571,14 @@ acpid_handle_event(const char *event)
 				}
 				nrules++;
 				if (p->type == RULE_CMD) {
-					if (do_cmd_rule(p, event) == KILL_VAL) {
-						/* Abort processing if event matches kill rule */
-						if (logevents) acpid_log(LOG_INFO, "Event must die");
-						while (*++lp);
-						lp--;
+					if (do_cmd_rule(p, event) == DROP_EVENT) {
+						/* Abort processing if event matches drop rule */
+						if (logevents)
+							acpid_log(LOG_INFO, "event dropped");
+						/* Skip the remaining rules. */
+						while (*++lp)
+							;
+						--lp;
 						break;
 					}
 				} else if (p->type == RULE_CLIENT) {
@@ -642,11 +654,20 @@ do_cmd_rule(struct rule *rule, const char *event)
 	const char *action;
 
 	/* Moved outside switch to avoid overhead of fork() on
-	 * killed events */
+	 * dropped events */
+	/* ??? There's no need to even call parse_cmd() here.  All
+	 *     we need to do is check rule->action.cmd for dropaction.
+	 *     parse_cmd()'s % expansion is not needed.  Recommend
+	 *     moving the call to parse_cmd() back into the child
+	 *     part of the fork().  Then just use:
+	 *       !strcmp(rule->action.cmd, dropaction)
+	 *     Need to test this to verify it is ok.
+	 */
 	/* parse the commandline, doing any substitutions needed */
 	action = parse_cmd(rule->action.cmd, event);
-	/* If it is so decreed, proclaim that the event is to be killed */
-	if (!strcmp(action, killstring)) return(KILL_VAL);
+	/* If it is so decreed, proclaim that the event is to be dropped */
+	if (!strcmp(action, dropaction))
+		return DROP_EVENT;
 
 	pid = fork();
 	switch (pid) {

@@ -64,7 +64,7 @@ static int nosocket;
 static int foreground;
 static const char *pidfile = ACPID_PIDFILE;
 static int netlink;
-const char *killstring = KILL_STR;
+const char *dropaction = DROP_ACTION;
 
 int
 main(int argc, char **argv)
@@ -207,7 +207,7 @@ handle_cmdline(int *argc, char ***argv)
 		{"pidfile", 1, 0, 'p'},
 		{"lockfile", 1, 0, 'L'},
 		{"netlink", 0, 0, 'n'},
-		{"killstring", 1, 0, 'k'},
+		{"dropaction", 1, 0, 'r'},
 		{"version", 0, 0, 'v'},
 		{"help", 0, 0, 'h'},
 		{NULL, 0, 0, 0},
@@ -226,7 +226,7 @@ handle_cmdline(int *argc, char ***argv)
 		"Use the specified PID file.",		/* pidfile */
 		"Use the specified lockfile to stop processing.", /* lockfile */
 		"Force netlink/input layer mode. (overrides -e)", /* netlink */
-		"Define the pseudo-command to drop an event.", /* killstring */
+		"Define the pseudo-action to drop an event.", /* dropaction */
 		"Print version information.",		/* version */
 		"Print this message.",			/* help */
 	};
@@ -237,7 +237,7 @@ handle_cmdline(int *argc, char ***argv)
 	for (;;) {
 		int i;
 		i = getopt_long(*argc, *argv,
-		    "c:C:de:flg:m:s:Sp:L:nk:vh", opts, NULL);
+		    "c:C:de:flg:m:s:Sp:L:nr:vh", opts, NULL);
 		if (i == -1) {
 			break;
 		}
@@ -283,8 +283,8 @@ handle_cmdline(int *argc, char ***argv)
 		case 'n':
 			netlink = 1;
 			break;
-		case 'k':
-			killstring = optarg;
+		case 'r':
+			dropaction = optarg;
 			break;
 		case 'v':
 			printf(PACKAGE "-" VERSION "\n");
