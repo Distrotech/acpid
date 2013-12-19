@@ -63,8 +63,10 @@ struct rule_list {
 	struct rule *head;
 	struct rule *tail;
 };
-static struct rule_list cmd_list;
+
+static struct rule_list drop_list;
 static struct rule_list client_list;
+static struct rule_list cmd_list;
 
 /* rule routines */
 static void enlist_rule(struct rule_list *list, struct rule *r);
@@ -176,7 +178,11 @@ acpid_read_conf(const char *confdir)
         /* fd is closed by parse_file() */
 		r = parse_file(fd_rule, file);
 		if (r) {
-			enlist_rule(&cmd_list, r);
+			/* if this is a drop rule */
+			if (!strcmp(r->action.cmd, dropaction))
+				enlist_rule(&drop_list, r);
+			else
+				enlist_rule(&cmd_list, r);
 			nrules++;
 		}
 		free(file);
@@ -223,6 +229,15 @@ acpid_cleanup_rules(int do_detach)
 	while (p) {
 		next = p->next;
 		delist_rule(&cmd_list, p);
+		free_rule(p);
+		p = next;
+	}
+
+	/* drop the drop rules */
+	p = drop_list.head;
+	while (p) {
+		next = p->next;
+		delist_rule(&drop_list, p);
 		free_rule(p);
 		p = next;
 	}
@@ -531,28 +546,17 @@ acpid_close_dead_clients(void)
 }
 
 /*
- * the main hook for propogating events
+ * the main hook for propagating events
  */
 int
 acpid_handle_event(const char *event)
 {
 	struct rule *p;
 	int nrules = 0;
-	/* cmd_list must come before client_list so drop rules are
-	 * processed before client rules */
-	/* ??? This is incorrect.  client_list must come before
-	 *     cmd_list to maintain compatible behavior.  As it
-	 *     is there is also a problem with config files that
-	 *     have names that are alphabetically prior to the
-	 *     config file with the <drop> in it.  The solution
-	 *     is to introduce a drop_list which contains only
-	 *     drop actions.  Then change the rule list to:
-	 *       { &drop_list, &client_list, &cmd_list, NULL }
-	 */
-	struct rule_list *ar[] = { &cmd_list, &client_list, NULL };
+	struct rule_list *ar[] = { &drop_list, &client_list, &cmd_list, NULL };
 	struct rule_list **lp;
 
-	/* make an event be atomic wrt known signals */
+	/* make an event atomic wrt known signals */
 	lock_rules();
 
 	/* scan each rule list for any rules that care about this event */
