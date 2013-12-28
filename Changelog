@@ -3,7 +3,7 @@
     (configure.ac)  (Ted Felix)
   - Add new <drop> action.  Debian #732277.
     (acpid.c event.h event.c acpid.8)
-    (Ted Felix, Pigeon <pigeon@pigeonsnest.co.uk>)
+    (Pigeon <pigeon@pigeonsnest.co.uk>, Ted Felix)
 
 * Sun Sep 15 2013  Ted Felix <ted -at- tedfelix -dot- com>
   - 2.0.20 release
