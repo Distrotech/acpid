@@ -1,4 +1,4 @@
-* Wed Jan 15 2013  Ted Felix <ted@tedfelix.com>
+* Wed Jan 15 2014  Ted Felix <ted@tedfelix.com>
   - 2.0.21 release
     (configure.ac)  (Ted Felix)
   - Add new <drop> action.  Debian #732277.
