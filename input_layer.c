@@ -175,6 +175,8 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_KEY, KEY_FN_F9, 1}, "button/fnf9 FNF9 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_FN_F10, 1}, "button/fnf10 FF10 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_FN_F11, 1}, "button/fnf11 FF11 00000080 00000000"},
+	/* F20 is sometimes used for micmute */
+	{{{0,0}, EV_KEY, KEY_F20, 1}, "button/f20 F20 00000080 00000000"},
 	/* Fn-F9 produces KEY_F24 on Thinkpad T42p */
 	{{{0,0}, EV_KEY, KEY_F24, 1}, "button/f24 F24 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_KBDILLUMTOGGLE, 1},
