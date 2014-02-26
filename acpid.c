@@ -240,7 +240,7 @@ handle_cmdline(int *argc, char ***argv)
 	for (;;) {
 		int i;
 		i = getopt_long(*argc, *argv,
-		    "c:C:de:flg:m:s:Sp:L:nr:vh", opts, NULL);
+		    "c:C:de:flg:m:s:Sp:L:nr:tvh", opts, NULL);
 		if (i == -1) {
 			break;
 		}
