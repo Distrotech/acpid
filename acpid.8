@@ -136,6 +136,18 @@ This option defines the pseudo-action which tells \fBacpid\fP to abort
 all processing of an event, including client notifications.
 Default is \fI<drop>\fP.
 .TP
+.BI \-t "\fR, \fP" \-\-tpmutefix
+This option enables special handling of the mute button for certain
+ThinkPad models with mute LEDs that get out of sync with the mute state
+when the mute button is held down.  With this option, the mute button
+will generate the following events in sync with the number of presses
+(and, by extension, the state of the LED):
+.IP
+.br
+button/mute MUTE (key pressed) K
+.br
+button/mute MUTE (key released) K
+.TP
 .BI \-v "\fR, \fP" \-\-version
 Print version information and exit.
 .TP
