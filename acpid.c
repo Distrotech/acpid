@@ -65,6 +65,7 @@ static int foreground;
 static const char *pidfile = ACPID_PIDFILE;
 static int netlink;
 const char *dropaction = DROP_ACTION;
+int tpmutefix = 0;
 
 int
 main(int argc, char **argv)
@@ -208,6 +209,7 @@ handle_cmdline(int *argc, char ***argv)
 		{"lockfile", 1, 0, 'L'},
 		{"netlink", 0, 0, 'n'},
 		{"dropaction", 1, 0, 'r'},
+		{"tpmutefix", 0, 0, 't'},
 		{"version", 0, 0, 'v'},
 		{"help", 0, 0, 'h'},
 		{NULL, 0, 0, 0},
@@ -227,6 +229,7 @@ handle_cmdline(int *argc, char ***argv)
 		"Use the specified lockfile to stop processing.", /* lockfile */
 		"Force netlink/input layer mode. (overrides -e)", /* netlink */
 		"Define the pseudo-action to drop an event.", /* dropaction */
+		"Fixup for ThinkPad mute-repeat behaviour.", /* tpmutefix */
 		"Print version information.",		/* version */
 		"Print this message.",			/* help */
 	};
@@ -285,6 +288,9 @@ handle_cmdline(int *argc, char ***argv)
 			break;
 		case 'r':
 			dropaction = optarg;
+			break;
+		case 't':
+			tpmutefix = 1;
 			break;
 		case 'v':
 			printf(PACKAGE "-" VERSION "\n");

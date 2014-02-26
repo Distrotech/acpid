@@ -203,6 +203,30 @@ static struct evtab_entry evtab[] = {
 
 };
 
+/* special support for the MUTE key, as the key toggles we want to
+ * consider repeated keys but don't report them all the time. We just
+ * ensure that the number of key presses (MOD 2) is correct.
+ */
+static const char *
+mute_string(struct input_event event)
+{
+	if (event.type == EV_KEY && event.code == KEY_MUTE) {
+		static size_t repeat_count;
+		if (event.value == 1) {
+			repeat_count = 1;
+			return "button/mute MUTE (key pressed)";
+		} else if (event.value == 2) {
+			repeat_count++;
+			return NULL;
+		} else if (event.value == 0) {
+			if (repeat_count % 2 == 0) {
+				return "button/mute MUTE (key released)";
+			}
+		}
+	}
+	return NULL;
+}
+
 /*----------------------------------------------------------------------*/
 /* Given an input event, returns the string corresponding to that event.
    If there is no corresponding string, NULL is returned.  */
@@ -301,7 +325,12 @@ static void process_input(int fd)
 	}
 	
 	/* convert the event into a string */
-	str = event_string(event);
+	if (tpmutefix) {
+		str = mute_string(event);
+		if (str ==  NULL)
+			str = event_string(event);
+	} else
+		str = event_string(event);
 	/* if this is not an event we care about, bail */
 	if (str == NULL)
 		return;
