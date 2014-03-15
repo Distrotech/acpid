@@ -1,6 +1,15 @@
-* ??? ??? 15 2014  Ted Felix <ted@tedfelix.com>
+* Sat March 15 2014  Ted Felix <ted@tedfelix.com>
   - 2.0.22 release
     (configure.ac)  (Ted Felix)
+  - Add support for F20.  Debian Bug #738611.
+    (input_layer.c)  (Ted Felix)
+  - Fix for repeated mute keys on some ThinkPad models.
+    (acpid.c acpid.h input_layer.c)
+    (Torsten Hilbrich <torsten.hilbrich@secunet.com>)
+  - Add "-t" short option for "--tpmutefix".
+    (acpid.c)  (Ted Felix)
+  - Update man page for --tpmutefix.
+    (acpid.8)  (Ted Felix)
 
 * Wed Jan 15 2014  Ted Felix <ted@tedfelix.com>
   - 2.0.21 release
