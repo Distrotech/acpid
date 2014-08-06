@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <linux/input.h>
+#include <linux/version.h>
 #include <string.h>
 #include <errno.h>
 #include <malloc.h>
@@ -112,8 +113,10 @@ static struct evtab_entry evtab[] = {
  		"button/volumeup VOLUP 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_MUTE, 1},
  		"button/mute MUTE 00000080 00000000"},
+#if LINUX_VERSION_CODE > KERNEL_VERSION(3, 0, 0)
 	{{{0,0}, EV_KEY, KEY_MICMUTE, 1},
 		"button/micmute MICMUTE 00000080 00000000"},
+#endif
  	/* cd play/pause buttons */
  	{{{0,0}, EV_KEY, KEY_NEXTSONG, 1},
  		"cd/next CDNEXT 00000080 00000000"},
