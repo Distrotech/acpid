@@ -71,13 +71,6 @@ will log all of its activities, as well as the stdout and stderr of any
 actions, to syslog.
 .PP
 All the default files and directories can be changed with commandline options.
-.PP
-When troubleshooting \fBacpid\fP, it is important to be aware that other parts 
-of a system might be handling ACPI events.
-\fBsystemd\fP(1) is capable of handling the power switch and various other
-events that are commonly handled by \fBacpid\fP.  See the description of 
-HandlePowerKey in \fBlogind.conf\fP(5) for more.  Some window managers also 
-take over \fBacpid\fP's normal handling of the power button and other events.
 .SH OPTIONS
 .TP 12
 .BI \-c "\fR, \fP" \-\-confdir " directory"
@@ -170,6 +163,41 @@ Then create a file named /etc/acpi/power.sh that contains the following:
 Now, when \fBacpid\fP is running, a press of the power button will cause the
 rule in /etc/acpi/events/power to trigger the script in /etc/acpi/power.sh.
 The script will then shut down the system.
+.SH TROUBLESHOOTING
+\fBacpid\fP is a simple program that runs scripts in response to ACPI
+events from the kernel.  When there's trouble, the problem is rarely
+with \fBacpid\fP itself.  The following are some suggestions for
+finding the most common sources of ACPI-related problems.
+.PP
+When troubleshooting \fBacpid\fP, it is important to be aware that other parts
+of a system might be handling ACPI events.
+\fBsystemd\fP(1) is capable of handling the power switch and various other
+events that are commonly handled by \fBacpid\fP.  See the description of
+HandlePowerKey in \fBlogind.conf\fP(5) for more.  Some window managers also
+take over \fBacpid\fP's normal handling of the power button and other events.
+.PP
+kacpimon(8) can be used to verify that the expected ACPI events are
+coming in.  See the man page for kacpimon(8) for the proper procedure.
+If the events aren't
+coming in, you've probably got a kernel driver issue.
+.PP
+If the expected events are coming in, then you'll need
+to check and see if your window manager is responsible for
+handling these events.  Some are, some aren't.  (E.g. in Ubuntu
+14.04 (Unity/GNOME), there are settings for the laptop lid in the
+System Settings > Power > "When the lid is closed" fields.)
+If your window manager is responsible for handling the problematic
+event, and you've got it configured properly, then you may have a
+window manager issue.
+.PP
+Lastly, take a look in \fI/etc/acpi/events\fP (see above).  Is there
+a configuration file in there for the event
+in question (e.g. /etc/acpi/events/lidbtn for laptop lid open/close
+events)?  Is it properly connected to a
+script (e.g. /etc/acpi/lid.sh)?  Is that script working?  It's not
+unusual for an \fBacpid\fP script to check and see if there is a window
+manager running, then do nothing if there is.  This means it is up
+to the window manager to handle this event.
 .SH DEPENDENCIES
 \fBacpid\fP should work on any linux kernel released since 2003.
 .SH FILES
@@ -196,7 +224,7 @@ acpi_listen(8), kacpimon(8)
 .SH PROJECT WEBSITE
 http://sourceforge.net/projects/acpid2/
 .SH AUTHORS
-Ted Felix (ted -at- tedfelix -dot- com)
+Ted Felix <ted@tedfelix.com>
 .br
 Tim Hockin <thockin@hockin.org>
 .br
