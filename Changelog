@@ -1,6 +1,10 @@
-* ??? ??? 15 2014  Ted Felix <ted@tedfelix.com>
+* Sat Aug 23 2014  Ted Felix <ted@tedfelix.com>
   - 2.0.23 release
     (configure.ac)  (Ted Felix)
+  - Avoid using KEY_MICMUTE if it doesn't exist.
+    (input_layer.c)  (Lonnie Abelbeck)
+  - Add troubleshooting section to man page.
+    (acpid.8)  (Ted Felix)
 
 * Sat March 15 2014  Ted Felix <ted@tedfelix.com>
   - 2.0.22 release
