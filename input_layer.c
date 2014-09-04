@@ -147,10 +147,12 @@ static struct evtab_entry evtab[] = {
 		"jack/lineout LINEOUT unplug"},
 	{{{0,0}, EV_SW, SW_LINEOUT_INSERT, 1},
 		"jack/lineout LINEOUT plug"},
+#ifdef SW_VIDEOOUT_INSERT
 	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 0},
 		"jack/videoout VIDEOOUT unplug"},
 	{{{0,0}, EV_SW, SW_VIDEOOUT_INSERT, 1},
 		"jack/videoout VIDEOOUT plug"},
+#endif
 	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 0},
 		"jack/linein LINEIN unplug"},
 	{{{0,0}, EV_SW, SW_LINEIN_INSERT, 1},
