@@ -186,6 +186,8 @@ static struct evtab_entry evtab[] = {
 	{{{0,0}, EV_KEY, KEY_F24, 1}, "button/f24 F24 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_KBDILLUMTOGGLE, 1},
  		"button/kbdillumtoggle KBILLUM 00000080 00000000"},
+	{{{0,0}, EV_KEY, KEY_COPY, 1}, "button/copy COPY 00000080 00000000"},
+	{{{0,0}, EV_KEY, KEY_RESTART, 1}, "button/restart RSTR 00000080 00000000"},
 
 #if 0
 	/* These "EV_MSC, 4, x" events cause trouble.  They are triggered */
