@@ -23,7 +23,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <sys/poll.h>
+#include <poll.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>

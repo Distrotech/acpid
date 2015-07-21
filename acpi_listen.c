@@ -32,7 +32,7 @@
 #include <ctype.h>
 #include <getopt.h>
 #include <time.h>
-#include <sys/poll.h>
+#include <poll.h>
 #include <grp.h>
 #include <signal.h>
 
