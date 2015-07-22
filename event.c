@@ -39,6 +39,8 @@
 #include "log.h"
 #include "sock.h"
 #include "ud_socket.h"
+#include "libc_compat.h"
+
 #include "event.h"
 /*
  * What is a rule?  It's polymorphic, pretty much.

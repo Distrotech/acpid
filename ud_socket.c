@@ -21,6 +21,7 @@
 #include "acpid.h"
 #include "log.h"
 #include "ud_socket.h"
+#include "libc_compat.h"
 
 int
 ud_create_socket(const char *name, mode_t socketmode)

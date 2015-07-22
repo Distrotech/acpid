@@ -39,6 +39,8 @@
 #include "acpid.h"
 #include "ud_socket.h"
 
+#include "libc_compat.h"
+
 static int handle_cmdline(int *argc, char ***argv);
 static char *read_line(int fd);
 

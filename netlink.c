@@ -41,6 +41,7 @@
 #include "libnetlink.h"
 #include "genetlink.h"
 #include "acpi_genetlink.h"
+#include "libc_compat.h"
 
 #include "acpi_ids.h"
 #include "connection_list.h"

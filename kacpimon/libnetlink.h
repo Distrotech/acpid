@@ -7,6 +7,8 @@
 #include <linux/netlink.h>
 #include <linux/rtnetlink.h>
 
+#include "libc_compat.h"
+
 struct rtnl_handle
 {
 	int			fd;

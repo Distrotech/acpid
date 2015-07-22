@@ -31,6 +31,7 @@
 #include "log.h"
 #include "event.h"
 #include "connection_list.h"
+#include "libc_compat.h"
 
 #include "proc.h"
 

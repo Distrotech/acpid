@@ -24,6 +24,8 @@
 #include <time.h>
 #include <sys/uio.h>
 
+#include "libc_compat.h"
+
 #include "libnetlink.h"
 
 void rtnl_close(struct rtnl_handle *rth)

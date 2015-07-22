@@ -42,6 +42,7 @@
 #include "log.h"
 #include "connection_list.h"
 #include "event.h"
+#include "libc_compat.h"
 
 #include "input_layer.h"
 

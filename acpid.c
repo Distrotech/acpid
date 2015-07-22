@@ -41,6 +41,7 @@
 #include "input_layer.h"
 #include "inotify_handler.h"
 #include "netlink.h"
+#include "libc_compat.h"
 
 static int handle_cmdline(int *argc, char ***argv);
 static void close_fds(void);
