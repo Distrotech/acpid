@@ -3,6 +3,7 @@ acpid Test Plan
 Suggestions
 
 - Run all these tests with valgrind to detect memory leaks.
+
 - It's best to test without a window manager running (such as GNOME or KDE) as
   they tend to handle acpi events on their own and override acpid.  To bring 
   down X on a system that is configured with a graphical login, there's usually
@@ -13,14 +14,16 @@ Suggestions
   It's different if you are using upstart:
       sudo initctl stop gdm
   And systemd requires a different incantation:
-      [anyone care to enlighten me?]
+      sudo systemctl stop gdm
   LightDM in Ubuntu 11.10 (and others) doesn't seem to care about the power 
   button.  So no need to stop it.  Just log out.
   Now X is out of the way and you can test from the console.
+
 - You can kill acpid with "sudo killall acpid".  Or if you are using upstart:
       sudo initctl stop acpid
   For systemd:
-      [anyone?]
+      sudo systemctl stop acpid acpid.socket
+
 - To make testing more convenient, you can run acpid from a shell as 
   "acpid -ld" to get maximum logging.  Use Ctrl-C to stop acpid.
 
