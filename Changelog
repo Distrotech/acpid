@@ -1,6 +1,15 @@
-* ??? ??? 15 2014  Ted Felix <ted@tedfelix.com>
+* Sat Aug 15 2015  Ted Felix <ted@tedfelix.com>
   - 2.0.24 release
     (configure.ac)  (Ted Felix)
+  - Avoid using SW_VIDEOOUT_INSERT if it isn't available.  (input_layer.c)
+    (Bostjan Skufca <bostjan@a2o.si>)
+  - Add support for Copy and Restart keys.  (input_layer.c)
+    (Andrey Kuznetsov)
+  - Add support for non-glibc libc's.  (acpi_listen.c acpid.c event.c
+    input_layer.c kacpimon/libnetlink.h libc_compat.h libnetlink.c netlink.c
+    proc.c ud_socket.c) (Brendan Heading <brendanheading@gmail.com>)
+  - Fix compiler warnings.  (acpi_listen.c event.c sock.c)
+    (Brendan Heading <brendanheading@gmail.com>)
 
 * Sat Aug 23 2014  Ted Felix <ted@tedfelix.com>
   - 2.0.23 release
