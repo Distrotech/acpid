@@ -14,7 +14,7 @@ bin_PROGRAMS = acpi_listen
 
 acpid_SOURCES = acpid.c acpi_ids.c connection_list.c event.c input_layer.c inotify_handler.c libnetlink.c log.c netlink.c proc.c sock.c ud_socket.c \
 				acpid.h  acpi_genetlink.h  acpi_ids.h  config.h  connection_list.h  event.h  genetlink.h  inotify_handler.h  input_layer.h  \
-				libnetlink.h  log.h  netlink.h  proc.h  sock.h  ud_socket.h
+				libnetlink.h  log.h  netlink.h  proc.h  sock.h  ud_socket.h  libc_compat.h
 
 acpi_listen_SOURCES = acpi_listen.c log.c ud_socket.c
 
