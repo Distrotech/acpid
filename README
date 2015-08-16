@@ -46,52 +46,6 @@ http://www.tedfelix.com  ( ted -at- tedfelix -dot- com )
 You can also fork the git repo on sourceforge and submit changes that way:
 http://sourceforge.net/u/tedfelix/acpid2/
 
-RELEASE PROCESS
-
-Before making the tarball:
-
-  1. Check the version number in configure.ac and the Changelog.
-  2. Check in all changes (except maybe the Changelog).
-  3. Update the Changelog based on changes since the last tag.
-       git log 2.0.17..
-  4. Check in Changelog and create a tag for the version.
-       git commit -a
-       git tag -a 2.0.xx
-  5. Push to sf.
-       git push
-       git push --tags
-
-To create the tarball for distribution:
-
-  $ make distclean
-  $ autoreconf --install --force
-  $ ./configure
-  $ make dist
-
-Upload to sf:
-
-  http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
-
-  $ rsync -t acpid-2.0.18.tar.xz tedfelix@frs.sourceforge.net:/home/frs/project/acpid2
-
-  or via sftp...
-
-  $ sftp tedfelix@frs.sourceforge.net
-  sftp> cd /home/frs/project/acpid2
-  sftp> put -p acpid-2.0.18.tar.xz
-
-Set this latest upload as the latest:
-
-  1. Login to sf.
-  2. Click on the "i" icon on the right in the file list.
-  3. Default download for: "Select all"
-  4. Save
-
-Once complete:
-
-  1. Update the version number in configure.ac.
-  2. Update the Changelog for the next version. 
-
 --------------------------------------------------------------------
 OLD README
 

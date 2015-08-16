@@ -1,6 +1,8 @@
 * ??? ??? 15 ????  Ted Felix <ted@tedfelix.com>
   - 2.0.25 release
     (configure.ac)  (Ted Felix)
+  - Remove release process from README.
+    (README)  (Ted Felix)
 
 * Sat Aug 15 2015  Ted Felix <ted@tedfelix.com>
   - 2.0.24 release
