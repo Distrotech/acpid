@@ -1,6 +1,8 @@
 * ??? ??? 15 ????  Ted Felix <ted@tedfelix.com>
   - 2.0.26 release
     (configure.ac)  (Ted Felix)
+  - Fix build warning with new kernel headers.  Debian #808015.
+    (libnetlink.c kacpimon/libnetlink.c)  (Ted Felix)
 
 * Sun Aug 16 2015  Ted Felix <ted@tedfelix.com>
   - 2.0.25 release
