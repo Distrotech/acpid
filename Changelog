@@ -15,6 +15,9 @@
   - Fix missing libc_compat.h in release tarball.
     (Makefile.am kacpimon/Makefile.am kacpimon/libc_compat.h)
     (Ted Felix)
+  - Fix out of tree build.
+    (Makefile.am)
+    (Khem Raj)
 
 * Sat Aug 15 2015  Ted Felix <ted@tedfelix.com>
   - 2.0.24 release

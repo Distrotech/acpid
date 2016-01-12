@@ -7,7 +7,7 @@
 SUBDIRS = kacpimon
 
 AM_CFLAGS = -Wall -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wshadow -Wstrict-prototypes -Wformat=2
-AM_CPPFLAGS = -include $(top_srcdir)/config.h
+AM_CPPFLAGS = -include $(top_builddir)/config.h
 
 sbin_PROGRAMS = acpid
 bin_PROGRAMS = acpi_listen
@@ -23,6 +23,6 @@ dist_man8_MANS = acpid.8 acpi_listen.8
 dist_doc_DATA = COPYING Changelog README TESTPLAN TODO
 
 # Just docs to add to the dist.
-# One problem with this is that it includes all files in the samples dir 
+# One problem with this is that it includes all files in the samples dir
 # including editor backups ending in ~.  It's the best we've got for now.
 EXTRA_DIST = acpid-design.odg samples
