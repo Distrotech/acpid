@@ -52,12 +52,12 @@ int non_root_clients;
 
 #ifndef HAVE_ISFDTYPE
 static int
-isfdtype (int fd, int fdtype)
+isfdtype(int fd, int fdtype)
 {
 	struct stat64 st;
-	if (fstat64 (fd, &st) != 0)
+	if (fstat64(fd, &st) != 0)
 		return -1;
-	return ((st.st_mode & S_IFMT) == (mode_t) fdtype);
+	return ((st.st_mode & S_IFMT) == (mode_t)fdtype);
 }
 #endif
 
@@ -67,6 +67,7 @@ is_socket(int fd)
 {
     return (isfdtype(fd, S_IFSOCK) == 1);
 }
+
 /* accept a new client connection */
 static void
 process_sock(int fd)
