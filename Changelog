@@ -6,6 +6,9 @@
   - Fix build with musl libc.
     (configure.ac sock.c)
     (Khem Raj)
+  - Fix out of tree build.
+    (Makefile.am)
+    (Khem Raj)
 
 * Sun Aug 16 2015  Ted Felix <ted@tedfelix.com>
   - 2.0.25 release
@@ -15,9 +18,6 @@
   - Fix missing libc_compat.h in release tarball.
     (Makefile.am kacpimon/Makefile.am kacpimon/libc_compat.h)
     (Ted Felix)
-  - Fix out of tree build.
-    (Makefile.am)
-    (Khem Raj)
 
 * Sat Aug 15 2015  Ted Felix <ted@tedfelix.com>
   - 2.0.24 release
