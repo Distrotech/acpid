@@ -3,7 +3,7 @@
     (configure.ac)  (Ted Felix)
   - Fix build warning with new kernel headers.  Debian #808015.
     (libnetlink.c kacpimon/libnetlink.c)  (Ted Felix)
-  - Fix build with musl libc.
+  - Fix build with musl libc.  Define isfdtype() if libc doesn't have it.
     (configure.ac sock.c)
     (Khem Raj)
   - Fix out of tree build.
