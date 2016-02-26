@@ -109,7 +109,11 @@ static struct evtab_entry evtab[] = {
 
  	{{{0,0}, EV_KEY, KEY_VOLUMEDOWN, 1},
  		"button/volumedown VOLDN 00000080 00000000"},
+	{{{0,0}, EV_KEY, KEY_VOLUMEDOWN, 2},
+		"button/volumedown VOLDN 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_VOLUMEUP, 1},
+		"button/volumeup VOLUP 00000080 00000000"},
+	{{{0,0}, EV_KEY, KEY_VOLUMEUP, 2},
  		"button/volumeup VOLUP 00000080 00000000"},
 	{{{0,0}, EV_KEY, KEY_MUTE, 1},
  		"button/mute MUTE 00000080 00000000"},
