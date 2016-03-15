@@ -1,10 +1,12 @@
-* 2.0.27  2016-xx-15  Ted Felix <ted@tedfelix.com>
+* 2.0.27  2016-03-15  Ted Felix <ted@tedfelix.com>
   - 2.0.27 release
     (configure.ac)  (Ted Felix)
   - Fix out of tree build
     (sock.c ud_socket.c) (Maxin B. John <maxin.john@intel.com>)
   - kacpimon: fix out of tree build
     (kacpimon/Makefile.am) (Maxin B. John <maxin.john@intel.com>)
+  - input_layer: Allow repeated reporting of VOLUME keys
+    (input_layer.c) (Torsten Hilbrich <torsten.hilbrich@secunet.com>)
 
 * 2.0.26  2016-01-15  Ted Felix <ted@tedfelix.com>
   - 2.0.26 release
