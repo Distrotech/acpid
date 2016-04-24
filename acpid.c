@@ -83,7 +83,14 @@ main(int argc, char **argv)
 
 	/* open the log */
 	open_log();
-	
+
+	/* if we're running in the background, and we're not being started */
+	/* by systemd */
+	if (!foreground  &&  !is_socket(STDIN_FILENO)) {
+		if (daemonize() < 0)
+			exit(EXIT_FAILURE);
+	}
+
 	if (!netlink) {
 		/* open the acpi event file in the proc fs */
 		/* if the open fails, try netlink */
@@ -105,13 +112,6 @@ main(int argc, char **argv)
 	/* open our socket */
 	if (!nosocket) {
 		open_sock();
-	}
-
-	/* if we're running in the background, and we're not being started */
-	/* by systemd */
-	if (!foreground  &&  !is_socket(STDIN_FILENO)) {
-		if (daemonize() < 0)
-			exit(EXIT_FAILURE);
 	}
 
 	/* redirect standard files to /dev/null */
