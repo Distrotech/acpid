@@ -44,6 +44,8 @@
 static void process_inotify(int fd)
 {
 	int bytes;
+	int processed_bytes = 0;
+
 	/* union to avoid strict-aliasing problems */
 	union {
 		char buffer[256];  /* a tad large */
@@ -68,44 +70,51 @@ static void process_inotify(int fd)
 		return;
 	}
 
-	acpid_log(LOG_DEBUG, "inotify name len: %d", eventbuf.event.len);
-
 	const int dnsize = 256;
 	char devname[dnsize];
 
-	/* if a name is included */
-	if (eventbuf.event.len > 0) {
-		/* devname = ACPID_INPUTLAYERDIR + "/" + pevent -> name */
-		strcpy(devname, ACPID_INPUTLAYERDIR);
-		strcat(devname, "/");
-		strncat(devname, eventbuf.event.name, dnsize - strlen(devname) - 1);
-	}
-		
-	/* if this is a create */
-	if (eventbuf.event.mask & IN_CREATE) {
-		acpid_log(LOG_DEBUG, "inotify about to open: %s", devname);
+	while (processed_bytes < bytes) {
+		struct inotify_event* curevent = (struct inotify_event *)
+			&eventbuf.buffer[processed_bytes];
 
-		open_inputfile(devname);
-	}
+		acpid_log(LOG_DEBUG, "inotify name len: %d", curevent->len);
 
-	/* if this is a delete */
-	if (eventbuf.event.mask & IN_DELETE) {
-		/* struct connection *c; */
-		
-		acpid_log(LOG_DEBUG, "inotify received a delete for: %s", devname);
+		/* if a name is included */
+		if (curevent->len > 0) {
+			/* devname = ACPID_INPUTLAYERDIR + "/" + pevent -> name */
+			strcpy(devname, ACPID_INPUTLAYERDIR);
+			strcat(devname, "/");
+			strncat(devname, curevent->name, dnsize - strlen(devname) - 1);
+		}
+
+		/* if this is a create */
+		if (curevent->mask & IN_CREATE) {
+			acpid_log(LOG_DEBUG, "inotify about to open: %s", devname);
+
+			open_inputfile(devname);
+		}
+
+		/* if this is a delete */
+		if (curevent->mask & IN_DELETE) {
+			/* struct connection *c; */
+
+			acpid_log(LOG_DEBUG, "inotify received a delete for: %s", devname);
 
 #if 0
-/* Switching back to the original ENODEV detection scheme.  See 
+/* Switching back to the original ENODEV detection scheme.  See
    process_input() in input_layer.c. */
 /* keeping this for future reference */
-		/* search for the event file in the connection list */
-		/* ??? Or should we just have a delete_connection_name()? */
-		c = find_connection_name(devname);
-		
-		/* close that connection if found */
-		if (c)
-			delete_connection(c->fd);
+			/* search for the event file in the connection list */
+			/* ??? Or should we just have a delete_connection_name()? */
+			c = find_connection_name(devname);
+
+			/* close that connection if found */
+			if (c)
+				delete_connection(c->fd);
 #endif
+		}
+
+		processed_bytes += sizeof(struct inotify_event) + curevent->len;
 	}
 }
 
