@@ -1,6 +1,12 @@
 * 2.0.28  2016-xx-15  Ted Felix <ted@tedfelix.com>
   - 2.0.28 release
     (configure.ac)  (Ted Felix)
+  - Fix intermittent "Address already in use".  Bug #12.
+    (acpid.c)  (Andreas Chmielewski)
+  - inotify: process all inotify messages in buffer.  Bug #13.
+    (inotify_handler.c)  (Dennis Wassenberg)
+  - Use proper lengths for inotify buffers.
+    (inotify_handler.c)  (Ted Felix)
 
 * 2.0.27  2016-03-15  Ted Felix <ted@tedfelix.com>
   - 2.0.27 release
