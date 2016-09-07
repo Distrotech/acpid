@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <limits.h>
 
 /* local */
 #include "acpid.h"
@@ -46,13 +47,9 @@ static void process_inotify(int fd)
 	int bytes;
 	int processed_bytes = 0;
 
-	/* union to avoid strict-aliasing problems */
-	union {
-		char buffer[256];  /* a tad large */
-		struct inotify_event event;
-	} eventbuf;
+	char eventbuf[sizeof(struct inotify_event) + NAME_MAX + 1];
 
-	bytes = read(fd, &eventbuf.buffer, sizeof(eventbuf.buffer));
+	bytes = read(fd, &eventbuf, sizeof(eventbuf));
 
 	acpid_log(LOG_DEBUG, "inotify read bytes: %d", bytes);
 
@@ -70,12 +67,13 @@ static void process_inotify(int fd)
 		return;
 	}
 
-	const int dnsize = 256;
+	const int dnsize = NAME_MAX + 1;
 	char devname[dnsize];
 
+	/* while there are still messages in eventbuf */
 	while (processed_bytes < bytes) {
 		struct inotify_event* curevent = (struct inotify_event *)
-			&eventbuf.buffer[processed_bytes];
+			&eventbuf[processed_bytes];
 
 		acpid_log(LOG_DEBUG, "inotify name len: %d", curevent->len);
 
