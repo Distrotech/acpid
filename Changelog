@@ -1,4 +1,4 @@
-* 2.0.28  2016-xx-15  Ted Felix <ted@tedfelix.com>
+* 2.0.28  2016-09-15  Ted Felix <ted@tedfelix.com>
   - 2.0.28 release
     (configure.ac)  (Ted Felix)
   - Fix intermittent "Address already in use".  Bug #12.
